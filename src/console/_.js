@@ -1,10 +1,47 @@
 import * as utils from '../_.js';
 import chalk from 'chalk';
 
-const is_silent = (process.env.BLUE_CONSOLE_SILENT === 'true');
+const is_silent_env = (
+    typeof process !== 'undefined' 
+    && process.env?.BLUE_CONSOLE_SILENT === 'true'
+);
+let is_silent = is_silent_env;
 
 
 let logs = {};
+
+export function silence( silent ) {
+
+    is_silent = utils.hench.bool.valid( silent ); 
+
+    // Disable console output completely
+    // 
+    if (is_silent) {
+        (function () {
+            try {
+                if (typeof (window.console) === 'undefined') {
+                    window.console = {};
+                }
+
+                window.console.log = function () { };
+                window.console.debug = function () { };
+                window.console.info = function () { };
+                window.console.warn = function () { };
+                window.console.error = function () { };
+                window.console.table = function () { };
+                window.console.time = function () { };
+                window.console.timeEnd = function () { };
+                window.console.timeLog = function () { };
+                window.console.timeStamp = function () { };
+
+                if (typeof (alert) !== 'undefined') {
+                    alert = function () { };
+                }
+
+            } catch (err) { }
+        })();
+    }
+}
 
 export function start({ id, title }) {
 
@@ -158,33 +195,4 @@ export function end({ id }) {
 	// 
 	console.log(`\n${title} ${action} ${ticktock}`);
 
-}
-
-
-// Disable console output completely
-// 
-if (is_silent) {
-	(function () {
-		try {
-			if (typeof (window.console) === 'undefined') {
-				window.console = {};
-			}
-
-			window.console.log = function () { };
-			window.console.debug = function () { };
-			window.console.info = function () { };
-			window.console.warn = function () { };
-			window.console.error = function () { };
-			window.console.table = function () { };
-			window.console.time = function () { };
-			window.console.timeEnd = function () { };
-			window.console.timeLog = function () { };
-			window.console.timeStamp = function () { };
-
-			if (typeof (alert) !== 'undefined') {
-				alert = function () { };
-			}
-
-		} catch (err) { }
-	})();
 }
