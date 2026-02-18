@@ -1,38 +1,35 @@
 import * as utils from '../_.js';
 
 import available_locales from './locales.js';
-import localizations from './localizations.js';
-import latinizations from './latinizations.js';
-import * as sanitizer from './sanitizer.js';
+import localisations from './localisations.js';
+import latinisations from './latinisations.js';
+import * as sanitiser from './sanitiser.js';
 
 /**
  * Replace latin-accented chars with ascii-safe ones
  *
- * @param   {String}   input   String with latin-accented chars to be sanitized
+ * @param   {String}   input   String with latin-accented chars to be sanitised
  *
  * @return   {String}   Returns ascii-safe version of input as çığöşüÇİĞÖŞÜ -> cigosuCIGOSU
  */
 
-export function latinize( input ) {
+export function latinise( input ) {
 
 	return utils.hench
 				.string.valid( input )
 				.replace( 
 						/[^\x00-\x7f]/gmu, 
-						( char ) => ( latinizations[char] || '' ) 
+						( char ) => ( latinisations[char] || '' ) 
 				);
 
 }
 
-export function latinise( input ) {
-	return latinize( input ); }
-
 export function is_latin( input ) {
-	return ( input === latinize( input ) ); }
+	return ( input === latinise( input ) ); }
 
 
 /**
- * Capitalize first char of each word
+ * Capitalise first char of each word
  *
  * @param   {String}   input   String to be title-cased
  *
@@ -60,18 +57,18 @@ export function title_case( input, locale ) {
 
 
 /**
- * Sanitizes a string by the criteria
+ * Sanitises a string by the criteria
  * Available options: 
- * latinize, lower, upper, title, trim, substr-x-n, substring-x-y, 
+ * latinise, lower, upper, title, trim, substr-x-n, substring-x-y, 
  * phone, numeric, space-n, white-n, line-n, tab-n
  *
- * @param   {String}   input      String to be sanitized
- * @param   {Array}   criteria   An array of criteria to apply to input for sanitization
+ * @param   {String}   input      String to be sanitised
+ * @param   {Array}   criteria   An array of criteria to apply to input for sanitisation
  *
- * @return   {String}   Sanitized string
+ * @return   {String}   Sanitised string
  */
 
-export function sanitize( input, criteria ) {
+export function sanitise( input, criteria ) {
 
 	input = utils.hench.string.valid( input );
 	if ( input.length < 1 ) {
@@ -84,7 +81,7 @@ export function sanitize( input, criteria ) {
 		return ''; }
 	criteria = criteria_;
 
-	let sanitized = input;
+	let sanitised = input;
 	let search = '';
 	let replace = '';
 
@@ -95,7 +92,7 @@ export function sanitize( input, criteria ) {
 		if ( utils.hench.array.valid( criterion ).length == 2 ) {
 			search = new RegExp( utils.hench.string.valid( criterion[0] ), 'gmu' );
 			replace = utils.hench.string.valid( criterion[1] );
-			sanitized = sanitized.replace( search, replace );
+			sanitised = sanitised.replace( search, replace );
 		}
 
 		
@@ -109,69 +106,69 @@ export function sanitize( input, criteria ) {
 
 		let params = criterion.split( ':::' );
 		let func = params.shift();
-		if ( !( sanitizer[func] instanceof Function ) ) {
+		if ( !( sanitiser[func] instanceof Function ) ) {
 			continue; }
 		
-		let reply = sanitizer[func]( sanitized, params );
+		let reply = sanitiser[func]( sanitised, params );
 		if ( false === reply ) {
 			continue; }
 
-		sanitized = reply;
+		sanitised = reply;
 
 	}
 
-	return sanitized;
+	return sanitised;
 
 }
 
 
 /**
- * Sanitizes an input and updates its value directly
+ * Sanitises an input and updates its value directly
  *
- * @param   {DOMElement}   el      Input element whose value is to be sanitized
+ * @param   {DOMElement}   el      Input element whose value is to be sanitised
  *
  * @return   {none}   No return value
  */
 
-export function sanitize_input( el ) {
+export function sanitise_input( el ) {
 
 	try {
 
-		let sanitization = utils.hench.string.valid( el.getAttribute( 'kp-sanitization' ) );
-		if ( sanitization.length < 1 ) {
-			const ancestor = el.closest( '[kp-sanitization]' );
+		let sanitisation = utils.hench.string.valid( el.getAttribute( 'data-sanitisation' ) );
+		if ( sanitisation.length < 1 ) {
+			const ancestor = el.closest( '[data-sanitisation]' );
 			if ( ancestor ) {
-				sanitization = utils.hench.string.valid( ancestor.getAttribute( 'kp-sanitization' ) ); } }
+				sanitisation = utils.hench.string.valid( ancestor.getAttribute( 'data-sanitisation' ) ); } }
 
-		if ( sanitization.length < 1 ) {
+		if ( sanitisation.length < 1 ) {
 			return; }
 
 		const caretPosition = ( !!( el.selectionStart ) ? utils.hench.number.valid( el.selectionStart ) : 0 );
-		el.value = sanitize( el.value, sanitization ); 
+		el.value = sanitise( el.value, sanitisation ); 
 		el.setSelectionRange( caretPosition, caretPosition );
 
 	} catch(err) {}
 
 }
 
-export function listen_to_sanitize() {
+export function listen_to_sanitise() {
     try {
         document.body.addEventListener( 'input', ( ev ) => {
-            sanitize_input( ev.target );
+            sanitise_input( ev.target );
         }, true);
     } catch(err) {}
 }
 
 
 /**
- * Finds and returns localization for the input
+ * Finds and returns localisation for the input
  * Returns input if not found
  *
- * @param   {String}   input    Key input of requested localization, usually English lower cased expression
+ * @param   {String}   input    Key input of requested localisation, usually English lower cased expression
  * @param   {String}   locale   Requested locale as en, tr, de, ru, ...
- * @param   {String}  prefix   Prefix for grouped / categorized localizations
+ * @param   {String}  prefix   Prefix for grouped / categorised localisations
  *
- * @return   {String}   Returns localized string for the input
+ * @return   {String}   Returns localised string for the input
  */
 
 export function get( input, locale, prefix ) {
@@ -188,7 +185,7 @@ export function get( input, locale, prefix ) {
 
 	// Lookup for input
 	// 
-	let obj = utils.hench.object.valid( localizations[( prefix + '--' + input)] );
+	let obj = utils.hench.object.valid( localisations[( prefix + '--' + input)] );
 	let output = utils.hench.string.valid( obj[locale] );
 
 	// No result, how about the default language?
@@ -199,7 +196,7 @@ export function get( input, locale, prefix ) {
 	// Still no result, without the prefix
 	// 
 	if ( output.length < 1 ) {
-		obj = utils.hench.object.valid( localizations[input] );
+		obj = utils.hench.object.valid( localisations[input] );
 		output = utils.hench.string.valid( obj[locale] ); }
 
 

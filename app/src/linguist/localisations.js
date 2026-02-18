@@ -544,7 +544,7 @@ export default {
         "tr": "Son Ödeme Tarihi"
     },
     "payment_failed": {
-        "en": "Your bank did not authorize this payment. Kindly, contact your bank for the details.",
+        "en": "Your bank did not authorise this payment. Kindly, contact your bank for the details.",
         "tr": "Bankanız bu ödemeyi onaylamadı. Ayrıntılar için, lütfen, bankanızla irtibata geçin."
     },
     "payment_info": {

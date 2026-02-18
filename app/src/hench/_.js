@@ -40,7 +40,7 @@ export function name_join( input ) {
 
 export function id_from( input ) {
 	// \x00 - \x7f
-	const output = linguist.sanitize( input, ['latinize','lower:::en'] )
+	const output = linguist.sanitise( input, ['latinise','lower:::en'] )
 				.replace( / /gmu, '-' )
 				.replace( /[^a-z0-9-_]/gmu, '_' );
 	// let output = string.valid( input )
@@ -50,14 +50,14 @@ export function id_from( input ) {
 	// 			.replace( / {2,}/gmu, ' ' )
 	// 			.trim()
 	// 			.replace( / /gmu, '_' );
-	// output = linguist.sanitize( output, ['latinize','lower'] );
+	// output = linguist.sanitise( output, ['latinise','lower'] );
 	
 	return output;
 }
 
-export function tokenize( input ) {
+export function tokenise( input ) {
 	
-	let output = linguist.sanitize( ( object.to_json( input ) || string.valid( input ) ), ['latinize','lower'] )
+	let output = linguist.sanitise( ( object.to_json( input ) || string.valid( input ) ), ['latinise','lower'] )
 				.replace( /[^a-z0-9 ]/gmu, ' ' )
 				// .replace( /[^a-z0-9-_ ]/gmu, ' ' )
 				.replace( / {2,}/gmu, ' ' )
@@ -74,10 +74,10 @@ export function compare_to_sort( l, r, desc ) {
 	desc = (( true == desc ) || ( 'desc' == desc ));
 
 	if ( string.fathom( l ) ) {
-		l = linguist.latinize( l ); }
+		l = linguist.latinise( l ); }
 
 	if ( string.fathom( r ) ) {
-		r = linguist.latinize( r ); }
+		r = linguist.latinise( r ); }
 
 	let c = ( ( l < r ) ? -1 : ( l > r ) ? 1 : 0 );
 
@@ -112,7 +112,7 @@ export function compare_to_filter({ tokens, obj }) {
 	if ( search_tokens.length < 1 ) {
 		search_tokens = string.valid( obj['tokens'] ); }
 	if ( search_tokens.length < 1 ) {
-		search_tokens = linguist.sanitize( object.to_json( obj ), ['search'] ); }
+		search_tokens = linguist.sanitise( object.to_json( obj ), ['search'] ); }
 
 	let count = tokens.length;
 	let found = 0;

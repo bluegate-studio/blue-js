@@ -194,7 +194,7 @@ export function filter( input, by ) {
 			let val = utils.hench.string.valid( obj.val );
 
 			if ( !fuzzy ) {
-				val = utils.linguist.sanitize( val, ['search'] )
+				val = utils.linguist.sanitise( val, ['search'] )
 					.split( ' ' )
 					.filter(( t ) => ( utils.hench.string.valid( t ).length > 0 ));
 			}

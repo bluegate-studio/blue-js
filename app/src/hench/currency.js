@@ -56,7 +56,7 @@ export function from_display({ input, accuracy }) {
 	if ( accuracy < 0 ) {
 		accuracy = 4; }
 
-	let value = utils.linguist.sanitize( input, ['currency'] );
+	let value = utils.linguist.sanitise( input, ['currency'] );
 	value = value.replace( /[ $,]/gmu, '' );
 	value = utils.hench.number.valid( value, 'float' );
 
