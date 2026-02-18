@@ -430,11 +430,22 @@ number.random( 1, 10 )  // → 7 (random)
 
 #### `number.nearest_in_array({ needle, haystack })`
 
-> ⚠️ Currently disabled (returns `false`). Will be re-enabled with a vanilla implementation.
+Finds the element in `haystack` closest to `needle` by absolute difference.
+
+```js
+number.nearest_in_array({ needle: 7, haystack: [1, 5, 10, 15] })  // → 5
+number.nearest_in_array({ needle: 12, haystack: [1, 5, 10, 15] }) // → 10
+number.nearest_in_array({ needle: 7, haystack: [] })              // → undefined
+```
 
 #### `number.nearest_next({ needle, haystack })` / `number.nearest_prev({ needle, haystack })`
 
-> ⚠️ Depend on `nearest_in_array` — currently non-functional.
+Finds the nearest element that is greater than (`nearest_next`) or less than (`nearest_prev`) the needle. Falls back to the closest element if no strictly greater/lesser value exists.
+
+```js
+number.nearest_next({ needle: 7, haystack: [1, 5, 10, 15] })  // → 10
+number.nearest_prev({ needle: 7, haystack: [1, 5, 10, 15] })  // → 5
+```
 
 ---
 

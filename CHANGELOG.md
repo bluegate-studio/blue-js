@@ -1,5 +1,14 @@
 > **⚠️ AGENT NOTICE:** This file tracks implementation history. For active development, read `__CORE__.md` + `__PROJECT__.md` first.
 
+## 0.0.4 — 2026-02-18 — Vanilla Reimplementations & Cleanup
+
+### ✅ Completed
+
+- [x] Re-enabled `nearest_in_array()` with vanilla O(n) implementation (was disabled due to lodash dependency)
+- [x] Removed dead `abs_objs` variables from `nearest_next()` and `nearest_prev()`
+- [x] Renamed internal import alias `kp` → `utils` across all hench sub-modules
+- [x] Reformatted `number.js` (4-space indentation, brace style)
+
 ## 0.0.3 — 2026-02-18 — Repo Cleanup & Public Release
 
 ### ✅ Completed
@@ -44,4 +53,5 @@
 
 ### 🔲 Pending
 
-- [ ] Re-enable `from_csv()`, `from_xml()`, `nearest_in_array()` with vanilla implementations (no external deps)
+- [ ] Re-enable `from_csv()`, `from_xml()` with vanilla implementations (no external deps)
+
