@@ -1,5 +1,14 @@
 > **⚠️ AGENT NOTICE:** This file tracks implementation history. For active development, read `__CORE__.md` + `__PROJECT__.md` first.
 
+## 0.0.6 — 2026-02-18 — Browser-Safe Shell Import
+
+### ✅ Completed
+
+- [x] Replaced static `export * as shell` with a conditional dynamic import using top-level `await`
+- [x] Shell module now loads only when `process.versions.node` is detected (i.e. Node/Bun)
+- [x] In browser environments, `utils.shell` resolves to an empty object — no crash, no import errors
+- [x] API is unchanged: `utils.shell.*` works identically on the server
+
 ## 0.0.5 — 2026-02-18 — Frontend-Safe Console
 
 ### ✅ Completed

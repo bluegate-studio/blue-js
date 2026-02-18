@@ -41,7 +41,7 @@ Everything is available under four namespaces:
 | `utils.console` | Universal | Structured dev logging with chalk |
 | `utils.shell` | **Server-only** | File operations and shell commands |
 
-> ⚠️ `utils.shell` uses Node.js built-ins (`node:fs`, `node:child_process`). **Never import it in browser/frontend code.** All other namespaces are browser-safe.
+> ⚠️ `utils.shell` uses Node.js built-ins (`node:fs`, `node:child_process`) and is only available in server environments (Node.js, Bun). **Importing `blue-js` in the browser is safe** — `utils.shell` gracefully resolves to an empty object, so shell functions simply won't be available. All other namespaces work in both environments.
 
 ---
 
@@ -828,7 +828,7 @@ utils.console.silence( true );  // done — all logging suppressed
 
 ## `utils.shell` — Server-Only Utilities
 
-> 🚨 **Server-only.** Uses `node:fs` and `node:child_process`. Do **not** import in browser code.
+> 🚨 **Server-only.** Uses `node:fs` and `node:child_process`. Importing `blue-js` in the browser is safe — `utils.shell` resolves to an empty object — but shell functions are only available in Node.js/Bun.
 
 ### `shell.base64_to_file({ base64, filename, folder, base_path, base_url })`
 
