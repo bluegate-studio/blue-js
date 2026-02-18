@@ -15,7 +15,9 @@ Install directly from the git repository:
 ```bash
 # HTTPS
 bun add git+https://github.com/bluegate-studio/blue-js.git
+```
 
+```bash
 # SSH
 bun add git+ssh://git@github.com:bluegate-studio/blue-js.git
 ```
