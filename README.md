@@ -1,6 +1,6 @@
 # blue-js
 
-A zero-dependency\* utility library for JavaScript. Safe type coercion, text sanitisation, i18n, structured logging, and server-side file operations — all in one import.
+A zero-dependency\* utility library for JavaScript. Safe type coercion, text sanitisation, i18n, and structured logging — all in one import.
 
 Works in **browsers** (SvelteKit, SPAs, any frontend) and **servers** (Node.js, Bun).
 
@@ -34,16 +34,13 @@ bun add /path/to/blue-js
 import * as utils from 'blue-js';
 ```
 
-Everything is available under four namespaces:
+Everything is available under three namespaces:
 
 | Namespace | Environment | Purpose |
 |-----------|-------------|---------|
 | `utils.hench` | Universal | Type safety, coercion, and general utilities |
 | `utils.linguist` | Universal | i18n, latinisation, text sanitisation |
 | `utils.console` | Universal | Structured dev logging with chalk |
-| `utils.shell` | **Server-only** | File operations and shell commands |
-
-> ⚠️ `utils.shell` uses Node.js built-ins (`node:fs`, `node:child_process`) and is only available in server environments (Node.js, Bun). **Importing `blue-js` in the browser is safe** — `utils.shell` gracefully resolves to an empty object, so shell functions simply won't be available. All other namespaces work in both environments.
 
 ---
 
@@ -828,75 +825,9 @@ utils.console.silence( true );  // done — all logging suppressed
 
 ---
 
-## `utils.shell` — Server-Only Utilities
+## `utils.shell` — Temporarily Removed
 
-> 🚨 **Server-only.** Uses `node:fs` and `node:child_process`. Importing `blue-js` in the browser is safe — `utils.shell` resolves to an empty object — but shell functions are only available in Node.js/Bun.
-
-### `shell.base64_to_file({ base64, filename, folder, base_path, base_url })`
-
-Saves a base64-encoded image to disk. Supports JPEG, PNG, and GIF. Returns `{ url, path }` on success.
-
-```js
-await shell.base64_to_file({
-  base64: 'data:image/png;base64,iVBOR...',
-  filename: 'avatar',
-  folder: 'uploads',
-  base_path: '/var/www/static',
-  base_url: 'https://cdn.example.com/static'
-});
-// → { url: 'https://cdn.example.com/static/uploads/avatar.png', path: '/var/www/static/uploads/avatar.png' }
-```
-
-If the input is already a URL (starts with `http`), it returns `{ url: input }` without saving.
-
-### `shell.move({ from, to })` / `shell.rename({ from, to })`
-
-Move or rename a file. `rename` is an alias for `move`.
-
-```js
-await shell.move({ from: '/tmp/file.txt', to: '/data/file.txt' });
-```
-
-### `shell.copy({ from, to })`
-
-Copy a file.
-
-```js
-await shell.copy({ from: '/data/original.txt', to: '/data/backup.txt' });
-```
-
-### `shell.files_in({ folder, filter, recursive })`
-
-Lists files in a directory. Uses the `find` command. Returns a sorted array of file paths.
-
-```js
-await shell.files_in({ folder: '/uploads', filter: '*.png', recursive: true })
-// → ['/uploads/avatar.png', '/uploads/photos/cover.png']
-```
-
-### `shell.node( cmd )`
-
-Executes a shell command and returns stdout as a string.
-
-```js
-const result = await shell.node( 'whoami' );  // → 'zeus'
-```
-
-### `shell.background( cmd )`
-
-Spawns a detached background process. The process runs independently and is not awaited.
-
-```js
-shell.background( 'node long-running-task.js' );
-```
-
-### `shell.dir( path )`
-
-Ensures a directory exists. Creates it recursively if needed. Returns the path on success, `''` on failure.
-
-```js
-shell.dir( '/data/uploads/2024' );  // creates all intermediate directories
-```
+> ⚠️ Shell functions (`base64_to_file`, `move`, `copy`, `files_in`, `node`, `background`, `dir`) have been **temporarily removed** from exports. The source code still exists at `src/shell/_.js` but is not active. These functions use Node.js built-ins (`node:fs`, `node:child_process`) which crash browser bundlers (Vite/esbuild). They will be re-enabled once an effective cross-environment solution is found.
 
 ---
 
