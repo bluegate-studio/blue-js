@@ -23,7 +23,7 @@ bun add git+ssh://git@github.com:bluegate-studio/blue-js.git
 Or, if you have the repo cloned locally:
 
 ```bash
-bun add /path/to/blue-js/app
+bun add /path/to/blue-js
 ```
 
 ## Import
