@@ -155,9 +155,11 @@ export function sanitize_input( el ) {
 }
 
 export function listen_to_sanitize() {
-	document.body.addEventListener( 'input', ( ev ) => {
-		sanitize_input( ev.target );
-	}, true);
+    try {
+        document.body.addEventListener( 'input', ( ev ) => {
+            sanitize_input( ev.target );
+        }, true);
+    } catch(err) {}
 }
 
 
@@ -247,18 +249,13 @@ export function current_locale( input ) {
 		return locale; }
 
 
-	// Event-forced locale
-	// 
-	locale = utils.hench.string.valid( window.kp_event_locale );
-	if ( locales.includes( locale ) ) {
-		return locale; }
-
-
 	// System locale
 	// 
-	locale = navigator.language.split( '-' )[0];
-	if ( locales.includes( locale ) ) {
-		return locale; }
+    try {
+        locale = navigator.language.split( '-' )[0];
+        if ( locales.includes( locale ) ) {
+            return locale; }
+    } catch(err) {}
 
 	// Default locale
 	// 
