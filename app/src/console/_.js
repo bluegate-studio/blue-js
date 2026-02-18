@@ -1,7 +1,7 @@
 import * as utils from '../_.js';
 import chalk from 'chalk';
 
-const is_silent = (process.env.BLUE_NO_CONSOLE === 'true');
+const is_silent = (process.env.BLUE_CONSOLE_SILENT === 'true');
 
 
 let logs = {};
@@ -9,21 +9,25 @@ let logs = {};
 export function start({ id, title }) {
 
 	if (is_silent) {
-		return; }
+		return;
+	}
 
 	id = utils.hench.string.valid(id);
 	if (id.length < 1) {
 		// throw new Error( 'id missing' );
-		return; }
+		return;
+	}
 
 	if (!!(logs[id])) {
 		// throw new Error( 'id exists' );
-		return; }
+		return;
+	}
 
 	title = utils.hench.string.valid(title);
 	if (title.length < 1) {
 		// throw new Error( 'title missing' );
-		return; }
+		return;
+	}
 
 	const log = {
 		tick: Date.now(),
@@ -47,16 +51,19 @@ export function start({ id, title }) {
 export function log({ id, message, payload }) {
 
 	if (is_silent) {
-		return; }
+		return;
+	}
 
 	id = utils.hench.string.valid(id);
 	if (id.length < 1) {
 		// throw new Error( 'id missing' );
-		return; }
+		return;
+	}
 
 	if (!(logs[id])) {
 		// throw new Error( 'id does not exist' );
-		return; }
+		return;
+	}
 
 	message = utils.hench.string.valid(message);
 
@@ -67,13 +74,16 @@ export function log({ id, message, payload }) {
 	const tock = Date.now();
 	let ticktock = '';
 	if ((tock - tick) > (60 * 1000)) {
-		ticktock = `${(tock - tick) / (60 * 1000)}m`; }
+		ticktock = `${(tock - tick) / (60 * 1000)}m`;
+	}
 
 	else if ((tock - tick) > 1000) {
-		ticktock = `${(tock - tick) / 1000}s`; }
+		ticktock = `${(tock - tick) / 1000}s`;
+	}
 
 	else {
-		ticktock = `${(tock - tick)}ms`; }
+		ticktock = `${(tock - tick)}ms`;
+	}
 
 
 	// Chalkify
@@ -87,45 +97,55 @@ export function log({ id, message, payload }) {
 	// Output
 	// 
 	if (!(payload)) {
-		console.log(`\n${title} ${ticktock} ${action}\n${message}`); }
+		console.log(`\n${title} ${ticktock} ${action}\n${message}`);
+	}
 	else {
-		console.log(`\n${title} ${ticktock} ${action}\n${message}`, payload); }
+		console.log(`\n${title} ${ticktock} ${action}\n${message}`, payload);
+	}
 
 }
 
 export function end({ id }) {
 
 	if (is_silent) {
-		return; }
+		return;
+	}
 
 	id = utils.hench.string.valid(id);
 	if (id.length < 1) {
 		// throw new Error( 'id missing' );
-		return; }
+		return;
+	}
 
 	if (!(logs[id])) {
 		// throw new Error( 'id does not exist' );
-		return; }
+		return;
+	}
 
 	let log = utils.hench.object.valid(logs[id], true); // true -> clone
 	delete logs[id];
 
 	let title = utils.hench.string.valid(log.title);
 	if (title.length < 1) {
-		return; }
+		return;
+	}
 
 	const tick = utils.hench.number.int(log.tick);
 	if (tick < 1) {
-		return; }
+		return;
+	}
 
 	const tock = Date.now();
 	let ticktock = '';
 	if ((tock - tick) > (60 * 1000)) {
-		ticktock = `${(tock - tick) / (60 * 1000)}m`; }
+		ticktock = `${(tock - tick) / (60 * 1000)}m`;
+	}
 	else if ((tock - tick) > 1000) {
-		ticktock = `${(tock - tick) / 1000}s`; }
+		ticktock = `${(tock - tick) / 1000}s`;
+	}
 	else {
-		ticktock = `${(tock - tick)}ms`; }
+		ticktock = `${(tock - tick)}ms`;
+	}
 
 
 	// Chalkify

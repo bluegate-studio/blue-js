@@ -23,7 +23,7 @@
 - [x] Ported `shell` module — Node.js file ops, shell command execution
 - [x] Removed external dependencies: fuse.js, papaparse, lodash, fast-xml-parser
 - [x] Added chalk as the sole dependency
-- [x] Replaced `env/dev.js` import with `process.env.BLUE_NO_CONSOLE` environment variable
+- [x] Replaced `env/dev.js` import with `process.env.BLUE_CONSOLE_SILENT` environment variable
 - [x] Removed all Bun-specific references from shell (`Bun.file()`, `Bun.spawn()`)
 - [x] Moved `dir()` from `hench` to `shell` (uses `node:fs`)
 - [x] Removed `resized_base64()` from `hench` (browser-only, uses `document.createElement`)
@@ -32,5 +32,4 @@
 
 ### 🔲 Pending
 
-- [ ] Separate entry points for universal (`blue-js`) vs server-only (`blue-js/server`) imports
 - [ ] Re-enable `from_csv()`, `from_xml()`, `nearest_in_array()` with vanilla implementations (no external deps)
