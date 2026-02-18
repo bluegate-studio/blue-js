@@ -1,5 +1,17 @@
 > **⚠️ AGENT NOTICE:** This file tracks implementation history. For active development, read `__CORE__.md` + `__PROJECT__.md` first.
 
+## 0.0.3 — 2026-02-18 — Repo Cleanup & Public Release
+
+### ✅ Completed
+
+- [x] Renamed env var `BLUE_NO_CONSOLE` → `BLUE_CONSOLE_SILENT` for clearer intent
+- [x] Removed `playground/` folder
+- [x] Flattened project structure: removed `app/` wrapper, moved `package.json`, `bun.lock`, `src/` to project root
+- [x] Fixed GitHub URL in README: `nicetomytyuk` → `bluegate-studio`
+- [x] Added MIT licence (`LICENSE`)
+- [x] Configured branch protection on `main` (linear history, no force pushes, no deletions)
+- [x] Removed "separate entry points" from pending (consuming developer's responsibility)
+
 ## 0.0.2 — 2026-02-18 — British English & Public Prep
 
 ### ✅ Completed
