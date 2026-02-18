@@ -1,4 +1,4 @@
-import * as kp from '../_.js';
+import * as utils from '../_.js';
 
 export function escape( input ) {
-	return kp.hench.string.valid( input ).replace(/[\-\/\\^$*+?.()|[\]{}]/g, '\\$&'); }
+	return utils.hench.string.valid( input ).replace(/[\-\/\\^$*+?.()|[\]{}]/g, '\\$&'); }
