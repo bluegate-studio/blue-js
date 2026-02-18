@@ -1,5 +1,14 @@
 > **⚠️ AGENT NOTICE:** This file tracks implementation history. For active development, read `__CORE__.md` + `__PROJECT__.md` first.
 
+## 0.0.5 — 2026-02-18 — Frontend-Safe Console
+
+### ✅ Completed
+
+- [x] Fixed crash when importing blue-js in browser environments (`process.env` is not available in frontend)
+- [x] Guarded env var check with `typeof process !== 'undefined'` and optional chaining
+- [x] Added `console.silence( silent )` — programmatic API for suppressing logs (frontend and server)
+- [x] Moved `window.console` nuke block from module-level into `silence()` (on-demand, no longer dead code)
+
 ## 0.0.4 — 2026-02-18 — Vanilla Reimplementations & Cleanup
 
 ### ✅ Completed

@@ -787,7 +787,7 @@ linguist.current_locale()        // → detected from browser/system
 
 ## `utils.console` — Structured Logging
 
-Timed, chalk-coloured structured logging with start/log/end lifecycle. Silenced when the environment variable `BLUE_CONSOLE_SILENT=true` is set.
+Timed, chalk-coloured structured logging with start/log/end lifecycle.
 
 ### `console.start({ id, title })`
 
@@ -813,7 +813,16 @@ utils.console.end({ id: log_id });
 // Fetch Users: completed in 15ms
 ```
 
-**Silencing:** Set `BLUE_CONSOLE_SILENT=true` in your environment to suppress all output. In browser environments, this also disables all `window.console` methods and `alert`.
+### `console.silence( silent )`
+
+Suppresses all structured logging when called with `true`. In browser environments, this also disables all `window.console` methods and `alert`.
+
+```js
+import * as utils from 'blue-js';
+utils.console.silence( true );  // done — all logging suppressed
+```
+
+**Silencing on the server:** Set `BLUE_CONSOLE_SILENT=true` in your environment. Logging is silenced automatically at import time — no API call needed.
 
 ---
 
