@@ -1,4 +1,4 @@
-import * as kp from '../_.js';
+import * as utils from '../_.js';
 
 export function int(input) {
     return valid(input, 'int');
@@ -70,7 +70,7 @@ export function random(min, max) {
 export function nearest_in_array({ needle, haystack }) {
 
     needle = float(needle);
-    haystack = kp.hench.array.valid(haystack);
+    haystack = utils.hench.array.valid(haystack);
 
     if ( haystack.length < 1 ) { 
         return undefined; }
@@ -96,8 +96,8 @@ export function nearest_in_array({ needle, haystack }) {
 export function nearest_next({ needle, haystack }) {
 
     needle = float(needle);
-    haystack = kp.hench.array.valid(haystack);
-    haystack = haystack.sort((l, r) => kp.hench.compare_to_sort(l, r));
+    haystack = utils.hench.array.valid(haystack);
+    haystack = haystack.sort((l, r) => utils.hench.compare_to_sort(l, r));
 
 
     const nearest = nearest_in_array({ needle, haystack });
@@ -121,8 +121,8 @@ export function nearest_next({ needle, haystack }) {
 export function nearest_prev({ needle, haystack }) {
 
     needle = float(needle);
-    haystack = kp.hench.array.valid(haystack);
-    haystack = haystack.sort((l, r) => kp.hench.compare_to_sort(l, r));
+    haystack = utils.hench.array.valid(haystack);
+    haystack = haystack.sort((l, r) => utils.hench.compare_to_sort(l, r));
 
 
     const nearest = nearest_in_array({ needle, haystack });
