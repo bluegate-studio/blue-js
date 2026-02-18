@@ -5,7 +5,11 @@
   "main": "./src/_.js",
   "module": "./src/_.js",
   "exports": {
-    ".": "./src/_.js"
+    ".": {
+      "bun": "./src/_.js",
+      "node": "./src/_.js",
+      "default": "./src/_.browser.js"
+    }
   },
   "dependencies": {
     "chalk": "^5.6.2"
