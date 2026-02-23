@@ -682,10 +682,6 @@ linguist.latinise( 'çığöşüÇİĞÖŞÜ' )  // → 'cigosuCIGOSU'
 linguist.latinise( 'crème brûlée' )     // → 'creme brulee'
 ```
 
-### `linguist.latinise( input )`
-
-Alias for `latinise`.
-
 ### `linguist.is_latin( input )`
 
 Returns `true` if the string contains only ASCII characters (i.e., latinisation doesn't change it).
