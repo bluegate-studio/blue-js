@@ -346,22 +346,25 @@ export function clean( input, params )  {
     let sanitised = utils.hench.string.valid( input );
     params = utils.hench.array.valid( params );
 
-    const stripTags = params.includes( 'tags' );
+    const strip_tags = params.includes( 'tags' );
     const minify = params.includes( 'minify' );
+    const trim = params.includes( 'trim' );
 
     let search = new RegExp( '\xa0', 'gmu' );
     let replace = ' ';
     sanitised = sanitised.replace( search, replace );
 
-    if ( true === stripTags ) {
+    if ( true === strip_tags ) {
         search = new RegExp( '<[^>]*>?', 'gmu' );
         replace = ' ';
         sanitised = sanitised.replace( search, replace ); }
 
-    if ( minify ) {
+    if ( true === minify ) {
         sanitised = utils.hench.string.minify( sanitised ); }
 
-    sanitised = sanitised.replace( / {2,}/gmu, ' ' ).trim();
+    sanitised = sanitised.replace( / {2,}/gmu, ' ' );
+    if ( true === trim ) {
+        sanitised = sanitised.trim(); }
 
     return sanitised;
 
