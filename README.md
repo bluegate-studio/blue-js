@@ -705,7 +705,7 @@ linguist.title_case( 'istanbul', 'tr' )     // → 'İstanbul'
 Composable sanitisation pipeline. Pass an array of operation strings. Parameters within an operation are separated by `:::`.
 
 ```js
-linguist.sanitise( input, ['clean:::minify', 'latinise', 'lower:::en'] )
+linguist.sanitise( input, ['clean:::minify:::trim', 'latinise', 'lower:::en'] )
 linguist.sanitise( input, ['phone'] )
 linguist.sanitise( input, ['search'] )
 linguist.sanitise( input, ['substr:::0:::255', 'upper:::tr'] )
@@ -718,7 +718,7 @@ linguist.sanitise( input, ['float:::0:::100'] )
 |-----------|-------------|
 | `email` | Minify, strip spaces/newlines, latinise, lowercase. Max 255 chars. |
 | `subject` | Minify and strip email forwarding prefixes (Re:, Fwd:, etc.). |
-| `search` | Minify, allow single spaces, strip newlines, latinise, lowercase. Max 255 chars. |
+| `search` | Clean (no minify), allow single spaces, strip newlines, latinise, lowercase. Max 255 chars. |
 | `sql` | Strip SQL comments, collapse whitespace. |
 | `url` | Minify, strip spaces/newlines, latinise, lowercase. Max 2048 chars. |
 | `phone` | Keep only digits, spaces, parentheses, dashes. Preserves leading `+`. Max 24 chars. |
@@ -737,8 +737,10 @@ linguist.sanitise( input, ['float:::0:::100'] )
 | `white:::n` | Collapse runs of more than N whitespace characters. |
 | `line:::n` | Collapse runs of more than N newlines. |
 | `tab:::n` | Collapse runs of more than N tabs. |
-| `clean:::minify` | Replace non-breaking spaces, collapse whitespace, trim. |
-| `clean:::tags` | Strip HTML tags, replace with spaces. |
+| `clean` | Replace non-breaking spaces, collapse multiple spaces. Does **not** trim or minify by default. |
+| `clean:::minify` | Also collapse all whitespace (newlines, tabs) into single spaces via `string.minify()`. |
+| `clean:::tags` | Also strip HTML tags, replacing them with spaces. |
+| `clean:::trim` | Also trim leading/trailing whitespace. |
 
 You can also pass **regex pairs** as `[pattern, replacement]` within the criteria array for custom replacements.
 
