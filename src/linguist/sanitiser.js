@@ -32,7 +32,7 @@ export function search( input )  {
 
     let sanitised = utils.hench.string.valid( input );
 
-    let criteria = [ 'clean:::minify', 'space:::1', 'line:::0', 'substr:::0:::255', 'latinise', 'lower:::en' ];
+    let criteria = [ 'clean', 'space:::1', 'line:::0', 'substr:::0:::255', 'latinise', 'lower:::en' ];
     for ( const criterion of criteria ) {
 
         let params = criterion.split( ':::' );
