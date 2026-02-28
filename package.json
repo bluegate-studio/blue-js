@@ -1,6 +1,6 @@
 {
   "name": "blue-js",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "type": "module",
   "main": "./src/_.js",
   "module": "./src/_.js",
