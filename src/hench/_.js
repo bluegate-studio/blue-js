@@ -112,7 +112,8 @@ export function compare_to_filter({ tokens, obj }) {
 	if ( search_tokens.length < 1 ) {
 		search_tokens = string.valid( obj['tokens'] ); }
 	if ( search_tokens.length < 1 ) {
-		search_tokens = linguist.sanitise( object.to_json( obj ), ['search'] ); }
+		const criteria = [ 'clean:::trim:::tags:::minify', 'space:::1', 'line:::0', 'latinise', 'lower:::en' ];
+		search_tokens = linguist.sanitise( object.to_json( obj ), criteria ); }
 
 	let count = tokens.length;
 	let found = 0;
