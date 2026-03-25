@@ -273,6 +273,21 @@ array.unique({ list: users, by: 'id' })
 // → deduplicated by id, sorted by the key
 ```
 
+#### `array.min({ haystack, needle })` / `array.max({ haystack, needle })`
+
+Finds the minimum or maximum value of a specific property across an array of objects. Returns `0` if the array is empty.
+
+```js
+const sessions = [
+  { title: 'A', duration: 30 },
+  { title: 'B', duration: 45 },
+  { title: 'C', duration: 15 }
+];
+array.min({ haystack: sessions, needle: 'duration' })  // → 15
+array.max({ haystack: sessions, needle: 'duration' })  // → 45
+array.min({ haystack: [], needle: 'duration' })         // → 0
+```
+
 #### `array.to_json( input, indent )` / `array.from_json( input )`
 
 Serialise an array to a JSON string, or parse a JSON string back to an array. Returns `''` or `[]` on failure.

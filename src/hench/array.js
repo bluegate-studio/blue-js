@@ -325,6 +325,29 @@ export function unique({ list, by }) {
 }
 
 
+/**
+ * @param haystack = [{foo, bar, baz},{foo, bar, baz}, ...]
+ * @param needle = foo
+ * @return min value of all foo's
+ */
+export function min({ haystack, needle }) {
+    haystack = utils.hench.array.valid( haystack );
+    needle = utils.hench.string.valid( needle );
+    return utils.hench.number.valid( haystack.reduce((min, s) => s?.[needle] < min ? s?.[needle] : min, Infinity) );
+}
+
+/**
+ * @param haystack = [{foo, bar, baz},{foo, bar, baz}, ...]
+ * @param needle = foo
+ * @return max value of all foo's
+ */
+export function max({ haystack, needle }) {
+    haystack = utils.hench.array.valid( haystack );
+    needle = utils.hench.string.valid( needle );
+    return utils.hench.number.valid( haystack.reduce((max, s) => s?.[needle] > max ? s?.[needle] : max, -Infinity) );
+}
+
+
 export function from_db( input ) {
 	
 	const objs = utils.hench.array.valid( input ).map(( m ) => {
