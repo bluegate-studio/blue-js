@@ -275,7 +275,7 @@ array.unique({ list: users, by: 'id' })
 
 #### `array.min({ haystack, needle })` / `array.max({ haystack, needle })`
 
-Finds the minimum or maximum value of a specific property across an array of objects. Returns `0` if the array is empty.
+Finds the minimum or maximum value of a specific property across an array of objects. `needle` supports dot-separated paths for nested values (e.g. `'pricing.amount'`). Returns `0` if the array is empty.
 
 ```js
 const sessions = [
@@ -286,6 +286,14 @@ const sessions = [
 array.min({ haystack: sessions, needle: 'duration' })  // → 15
 array.max({ haystack: sessions, needle: 'duration' })  // → 45
 array.min({ haystack: [], needle: 'duration' })         // → 0
+
+// Dot-path access for nested objects:
+const products = [
+  { name: 'A', pricing: { amount: 1200 } },
+  { name: 'B', pricing: { amount: 800 } }
+];
+array.min({ haystack: products, needle: 'pricing.amount' })  // → 800
+array.max({ haystack: products, needle: 'pricing.amount' })  // → 1200
 ```
 
 #### `array.to_json( input, indent )` / `array.from_json( input )`
@@ -346,16 +354,20 @@ object.values( { a: 1, b: 2 } )  // → [1, 2]
 
 Checks if the object has any truthy values.
 
-#### `object.nested({ of, from })`
+#### `object.nested({ needle, haystack })`
 
-Safe deep access into nested objects. `of` can be a dot-separated string or an array of keys.
+Safe deep access into nested objects. `needle` can be a dot-separated string or an array of keys. Returns the value if found, `null` otherwise. Never throws — handles missing paths, nulls, and non-object inputs gracefully.
 
 ```js
 const data = { user: { profile: { name: 'Zeus' } } };
 
-object.nested({ of: 'user.profile.name', from: data })  // → 'Zeus'
-object.nested({ of: 'user.missing.path', from: data })   // → null
-object.nested({ of: ['user', 'profile'], from: data })   // → { name: 'Zeus' }
+object.nested({ needle: 'user.profile.name', haystack: data })  // → 'Zeus'
+object.nested({ needle: 'user.missing.path', haystack: data })   // → null
+object.nested({ needle: ['user', 'profile'], haystack: data })   // → { name: 'Zeus' }
+
+// Safe with any input:
+object.nested({ needle: 'key', haystack: null })      // → null
+object.nested({ needle: 'key', haystack: 'string' })  // → null
 ```
 
 #### `object.to_json( input, indent )` / `object.from_json( input )`
