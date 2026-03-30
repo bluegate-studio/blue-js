@@ -217,7 +217,7 @@ export function filter( input, by ) {
 			let obj = {};
 			for ( const key of m.keys ) {
 				// key might be a dot-separated path
-				obj[key] = utils.hench.object.nested({ of: key, from: n }); }
+				obj[key] = utils.hench.object.nested({ needle: key, haystack: n }); }
 			return utils.hench.compare_to_filter({tokens,obj});
 		});
 

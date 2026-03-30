@@ -33,42 +33,42 @@ export function values_empty( input ) {
 export function values_not_empty( input ) {
 	return ( values( input ).length > 0 ); }
 
-export function nested({ of, from }) {
+export function nested({ needle, haystack }) {
 
-	if ( !from || typeof from !== 'object' ) return null;
+    if ( !haystack || typeof haystack !== 'object' ) return null;
 
-	if ( typeof of === 'string' ) {
+    if ( typeof needle === 'string' ) {
 
-		// Fast path: no dot → single-level access
-		if ( of.indexOf( '.' ) === -1 ) {
-			const val = from[ of ];
-			return val == null ? null : val;
-		}
+        // Fast path: no dot → single-level access
+        if ( needle.indexOf( '.' ) === -1 ) {
+            const val = haystack[ needle ];
+            return val == null ? null : val;
+        }
 
-		// Multi-level: walk the dot path
-		let cursor = from;
-		let start  = 0;
-		for ( let i = 0, len = of.length; i <= len; i++ ) {
-			if ( i === len || of.charCodeAt( i ) === 46 ) {
-				cursor = cursor[ of.substring( start, i ) ];
-				if ( cursor == null ) return null;
-				start = i + 1;
-			}
-		}
-		return cursor;
+        // Multi-level: walk the dot path
+        let cursor = haystack;
+        let start  = 0;
+        for ( let i = 0, len = needle.length; i <= len; i++ ) {
+            if ( i === len || needle.charCodeAt( i ) === 46 ) {
+                cursor = cursor[ needle.substring( start, i ) ];
+                if ( cursor == null ) return null;
+                start = i + 1;
+            }
+        }
+        return cursor;
 
-	}
+    }
 
-	if ( Array.isArray( of ) ) {
-		let cursor = from;
-		for ( let i = 0; i < of.length; i++ ) {
-			cursor = cursor[ of[ i ] ];
-			if ( cursor == null ) return null;
-		}
-		return cursor;
-	}
+    if ( Array.isArray( needle ) ) {
+        let cursor = haystack;
+        for ( let i = 0; i < needle.length; i++ ) {
+            cursor = cursor[ needle[ i ] ];
+            if ( cursor == null ) return null;
+        }
+        return cursor;
+    }
 
-	return null;
+    return null;
 
 }
 
