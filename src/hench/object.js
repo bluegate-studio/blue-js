@@ -33,27 +33,61 @@ export function values_empty( input ) {
 export function values_not_empty( input ) {
 	return ( values( input ).length > 0 ); }
 
-export function nested({of, from}) { 
+export function nested({ of, from }) {
 
-	let keys = utils.hench.array.valid( of );
-	if ( keys.length < 1 ) {
-		keys = utils.hench.string.valid( of ).split( '.' ); }
+	if ( !from || typeof from !== 'object' ) return null;
 
-	const obj = utils.hench.object.valid( from )
+	if ( typeof of === 'string' ) {
 
-	return keys.reduce((xs, x) => (xs && xs[x]) ? xs[x] : null, obj);
+		// Fast path: no dot → single-level access
+		if ( of.indexOf( '.' ) === -1 ) {
+			const val = from[ of ];
+			return val == null ? null : val;
+		}
+
+		// Multi-level: walk the dot path
+		let cursor = from;
+		let start  = 0;
+		for ( let i = 0, len = of.length; i <= len; i++ ) {
+			if ( i === len || of.charCodeAt( i ) === 46 ) {
+				cursor = cursor[ of.substring( start, i ) ];
+				if ( cursor == null ) return null;
+				start = i + 1;
+			}
+		}
+		return cursor;
+
+	}
+
+	if ( Array.isArray( of ) ) {
+		let cursor = from;
+		for ( let i = 0; i < of.length; i++ ) {
+			cursor = cursor[ of[ i ] ];
+			if ( cursor == null ) return null;
+		}
+		return cursor;
+	}
+
+	return null;
+
+}
+
+
+export function nested__human_version({of, from}) { 
+
+    let keys = utils.hench.array.valid( of );
+    if ( keys.length < 1 ) {
+        keys = utils.hench.string.valid( of ).split( '.' ); }
+
+    const obj = utils.hench.object.valid( from )
+
+    return keys.reduce((xs, x) => (xs && xs[x]) ? xs[x] : null, obj);
 
 //
 // https://medium.com/javascript-inside/safely-accessing-deeply-nested-values-in-javascript-99bf72a0855a
 // A. Sharif @sharifsbeat
 // 
 }
-
-// ChatGPT
-// 
-// function get_deep(obj, path) {
-//     return path.split('.').reduce((acc, key) => acc && acc[key], obj);
-// }
 
 
 /**
