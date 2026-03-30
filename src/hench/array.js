@@ -327,24 +327,34 @@ export function unique({ list, by }) {
 
 /**
  * @param haystack = [{foo, bar, baz},{foo, bar, baz}, ...]
- * @param needle = foo
+ * @param needle = foo OR foo.bar.baz.bar.foo
  * @return min value of all foo's
  */
 export function min({ haystack, needle }) {
     haystack = utils.hench.array.valid( haystack );
     needle = utils.hench.string.valid( needle );
-    return utils.hench.number.valid( haystack.reduce((min, s) => s?.[needle] < min ? s?.[needle] : min, Infinity) );
+    const output = haystack.reduce((min, s) => { 
+            const val = utils.hench.object.nested({ needle, haystack: s });
+            return ( ( val < min ) ? val : min );
+        }
+        , Infinity);
+    return utils.hench.number.valid( output );
 }
 
 /**
  * @param haystack = [{foo, bar, baz},{foo, bar, baz}, ...]
- * @param needle = foo
+ * @param needle = foo OR foo.bar.baz.bar.foo
  * @return max value of all foo's
  */
 export function max({ haystack, needle }) {
     haystack = utils.hench.array.valid( haystack );
     needle = utils.hench.string.valid( needle );
-    return utils.hench.number.valid( haystack.reduce((max, s) => s?.[needle] > max ? s?.[needle] : max, -Infinity) );
+    const output = haystack.reduce((max, s) => { 
+            const val = utils.hench.object.nested({ needle, haystack: s });
+            return ( ( val > max ) ? val : max );
+        }
+        , -Infinity);
+    return utils.hench.number.valid( output );
 }
 
 
