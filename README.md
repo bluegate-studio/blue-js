@@ -275,7 +275,7 @@ array.unique({ list: users, by: 'id' })
 
 #### `array.min({ haystack, needle })` / `array.max({ haystack, needle })`
 
-Finds the minimum or maximum value of a specific property across an array of objects. `needle` supports dot-separated paths for nested values (e.g. `'pricing.amount'`). Returns `0` if the array is empty.
+Finds the minimum or maximum value of a specific property across an array of objects. Auto-detects numeric vs string values from the first non-empty entry. `needle` supports dot-separated paths for nested values (e.g. `'pricing.amount'`). Returns `0` for numeric data or `''` for string data if the array is empty.
 
 ```js
 const sessions = [
@@ -294,6 +294,15 @@ const products = [
 ];
 array.min({ haystack: products, needle: 'pricing.amount' })  // → 800
 array.max({ haystack: products, needle: 'pricing.amount' })  // → 1200
+
+// String values (e.g. ISO datetimes) — compared lexicographically:
+const events = [
+  { name: 'A', starts_at: '2026-03-15T09:00:00Z' },
+  { name: 'B', starts_at: '2026-01-20T14:00:00Z' },
+  { name: 'C', starts_at: '2026-06-01T18:00:00Z' }
+];
+array.min({ haystack: events, needle: 'starts_at' })  // → '2026-01-20T14:00:00Z'
+array.max({ haystack: events, needle: 'starts_at' })  // → '2026-06-01T18:00:00Z'
 ```
 
 #### `array.to_json( input, indent )` / `array.from_json( input )`

@@ -328,33 +328,67 @@ export function unique({ list, by }) {
 /**
  * @param haystack = [{foo, bar, baz},{foo, bar, baz}, ...]
  * @param needle = foo OR foo.bar.baz.bar.foo
- * @return min value of all foo's
+ * @return min value of all foo's (number or string)
  */
 export function min({ haystack, needle }) {
     haystack = utils.hench.array.valid( haystack );
     needle = utils.hench.string.valid( needle );
-    const output = haystack.reduce((min, s) => { 
+
+    let seed;
+    let is_number = true;
+
+    for ( const item of haystack ) {
+        const val = utils.hench.object.nested({ needle, haystack: item });
+        if ( val != null && val !== '' ) {
+            is_number = ( Number === utils.hench.type_of( val ) );
+            seed = is_number ? Infinity : val;
+            break;
+        }
+    }
+
+    if ( seed === undefined ) return is_number ? 0 : '';
+
+    const output = haystack.reduce(( min, s ) => {
             const val = utils.hench.object.nested({ needle, haystack: s });
+            if ( val == null || val === '' ) return min;
             return ( ( val < min ) ? val : min );
         }
-        , Infinity);
-    return utils.hench.number.valid( output );
+        , seed );
+
+    return output;
 }
 
 /**
  * @param haystack = [{foo, bar, baz},{foo, bar, baz}, ...]
  * @param needle = foo OR foo.bar.baz.bar.foo
- * @return max value of all foo's
+ * @return max value of all foo's (number or string)
  */
 export function max({ haystack, needle }) {
     haystack = utils.hench.array.valid( haystack );
     needle = utils.hench.string.valid( needle );
-    const output = haystack.reduce((max, s) => { 
+
+    let seed;
+    let is_number = true;
+
+    for ( const item of haystack ) {
+        const val = utils.hench.object.nested({ needle, haystack: item });
+        if ( val != null && val !== '' ) {
+            is_number = ( Number === utils.hench.type_of( val ) );
+            seed = is_number ? -Infinity : val;
+            break;
+        }
+    }
+
+    if ( seed === undefined ) return is_number ? 0 : '';
+
+    const output = haystack.reduce(( max, s ) => {
             const val = utils.hench.object.nested({ needle, haystack: s });
+            if ( val == null || val === '' ) return max;
             return ( ( val > max ) ? val : max );
         }
-        , -Infinity);
-    return utils.hench.number.valid( output );
+        , seed );
+
+    return output;
 }
 
 
