@@ -105,17 +105,19 @@ export function to_textarea( input ) {
 }
 
 
-export function trim_to_words( input, maxWordCount ) {
+export function trim_to_words( input, max_words ) {
 
-	const words = valid( input )
-					.replace( /<br>/gmu, '\n' )
-					.replace( /<br \/>/gmu, '\n' )
-					.trim()
-					.split( ' ' );
-					
-	const output = ( ( words.length <= maxWordCount ) ? words.join( ' ' ) : `${words.slice( 0, maxWordCount ).join( ' ' )}...` );
+	input = valid( input );
+	max_words = utils.hench.number.valid( max_words );
 
-	return output;
+	if ( max_words < 1 ) { return ''; }
+	if ( input.length < 1 ) { return ''; }
+
+	const words = input.trim().split( /\s+/ ).filter( Boolean );
+
+	if ( words.length <= max_words ) { return input; }
+
+	return `${ words.slice( 0, max_words ).join( ' ' ) }…`;
 
 }
 
