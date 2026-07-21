@@ -315,6 +315,15 @@ array.to_json( [1, 2, 3], 2 )     // → '[\n  1,\n  2,\n  3\n]'
 array.from_json( '[1,2,3]' )      // → [1, 2, 3]
 ```
 
+#### `array.any_intersect( l, r )`
+
+Checks if two arrays share any common elements. Coerces both inputs safely to arrays. Optimised using a `Set` built from the larger array.
+
+```js
+array.any_intersect( ['a', 'b'], ['b', 'c'] )  // → true
+array.any_intersect( [1, 2], [3, 4] )          // → false
+```
+
 #### `array.from_db( input )` / `array.to_db( input )`
 
 Automatic type coercion for database rows based on column name suffixes. See [DB Serialisation](#db-serialisation) below.
@@ -703,6 +712,52 @@ hench.compare_to_filter({
   obj: { search_tokens: 'john,doe,istanbul' }
 })
 // → true
+```
+
+#### `hench.viewport_factor( f )`
+
+Calculates a integer viewport factor based on screen area (`innerWidth * innerHeight / (f * 10,000)`). Returns `0` if `window` is undefined.
+
+```js
+hench.viewport_factor( 1 )  // → e.g. 192 (for 1920x1080)
+```
+
+---
+
+### `hench.debounce`
+
+Debounce utilities for timing operations.
+
+#### `debounce.timeout({ callback, timeout_ms, payload })`
+
+Creates a debounced function that executes `callback` after `timeout_ms` (default: 360ms) of inactivity. Passes `{ payload, params }` to the callback.
+
+```js
+const debounced = hench.debounce.timeout({
+  callback: ({ payload, params }) => {
+    console.log('Debounced call:', payload, params);
+  },
+  timeout_ms: 300,
+  payload: { entity_id: 42 }
+});
+
+debounced( 'arg1', 'arg2' );
+```
+
+#### `debounce.frame({ callback, payload })`
+
+Creates a debounced function executing on the next animation frame using `requestAnimationFrame`. Preserves calling context and includes `.cancel()` method.
+
+```js
+const debounced_frame = hench.debounce.frame({
+  callback: ({ payload, params }) => {
+    // runs on animation frame
+  },
+  payload: { state: 'active' }
+});
+
+debounced_frame( 'arg1' );
+debounced_frame.cancel(); // cancels pending animation frame
 ```
 
 ---
