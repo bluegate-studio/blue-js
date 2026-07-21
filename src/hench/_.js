@@ -7,6 +7,7 @@ export * as object from './object.js';
 export * as regex from './regex.js';
 export * as string from './string.js';
 export * as url from './url.js';
+export * as debounce from './debounce.js';
 
 
 import * as bool from './bool.js';
@@ -141,5 +142,14 @@ export function type_of( input ) {
 	} catch ( err ) { output = ''; }
 
 	return output;
+
+}
+
+export function viewport_factor( f ) {
+
+	if ( typeof window === 'undefined' ) {
+		return 0; }
+
+	return ( ( ( window.innerWidth * window.innerHeight ) / ( ( f || 1 ) * 10_000 ) ) | 0 );
 
 }

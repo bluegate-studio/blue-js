@@ -482,3 +482,18 @@ export function to_db( input ) {
 	return objs;
 	
 }
+
+export function any_intersect( l, r ) {
+    
+    l = utils.hench.array.valid( l );
+    r = utils.hench.array.valid( r );
+
+    if ( l.length < r.length ) {
+        const set = new Set( r );
+        return l.some(( m ) => set.has( m )); }
+
+    else {
+        const set = new Set( l );
+        return r.some(( m ) => set.has( m )); }
+
+}
