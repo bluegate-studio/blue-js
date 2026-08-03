@@ -226,17 +226,17 @@ export function latinise( input )  {
 export function upper( input, params )  {
     let locale = utils.hench.string.valid( params?.[0] );
     if ( locale.length < 1 ) {
-        locale = 'tr'; }
+        locale = 'en'; }
     return utils.hench.string.valid( input ).toLocaleUpperCase( locale ); }
 export function lower( input, params )  {
     let locale = utils.hench.string.valid( params?.[0] );
     if ( locale.length < 1 ) {
-        locale = 'tr'; }
+        locale = 'en'; }
     return utils.hench.string.valid( input ).toLocaleLowerCase( locale ); }
 export function title( input, params )  {
     let locale = utils.hench.string.valid( params?.[0] );
     if ( locale.length < 1 ) {
-        locale = 'tr'; }
+        locale = 'en'; }
     return utils.linguist.title_case( input, locale ); }
 
 

@@ -58,7 +58,7 @@ export function id_from( input ) {
 
 export function tokenise( input ) {
 	
-	let output = linguist.sanitise( ( object.to_json( input ) || string.valid( input ) ), ['latinise','lower'] )
+	let output = linguist.sanitise( ( object.to_json( input ) || string.valid( input ) ), ['latinise','lower:::en'] )
 				.replace( /[^a-z0-9 ]/gmu, ' ' )
 				// .replace( /[^a-z0-9-_ ]/gmu, ' ' )
 				.replace( / {2,}/gmu, ' ' )
