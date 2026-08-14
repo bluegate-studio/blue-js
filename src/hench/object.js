@@ -145,6 +145,8 @@ export function from_json( input ) {
 		
 	} catch ( err ) { output = {}; }
 
+	if ( !output ) {
+		return {}; }
 
 	return output;
 
