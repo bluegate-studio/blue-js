@@ -106,7 +106,7 @@ export function compare_to_sort( l, r, desc ) {
 
 export function compare_to_filter({ tokens, obj }) {
 
-	tokens = array.valid( tokens );
+	tokens = array.valid( tokens ).filter(( t ) => string.valid( t ).length > 0);
 	obj = object.valid( obj );
 
 	let search_tokens = string.valid( obj['search_tokens'] );
@@ -119,10 +119,7 @@ export function compare_to_filter({ tokens, obj }) {
 	let count = tokens.length;
 	let found = 0;
 	for ( let i=0; i < count; i++ ) {
-		let token = string.valid( tokens[i] );
-		if ( token.length < 1 ) {
-			continue; }
-		if ( !( search_tokens.includes( token ) ) ) {
+		if ( !( search_tokens.includes( tokens[i] ) ) ) {
 			found = 0;
 			break; }
 

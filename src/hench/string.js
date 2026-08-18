@@ -41,6 +41,7 @@ export function random({ len, type, seed }) {
 	type = type.split( '|' );		
 	
 	if ( type.includes( 'numeric' ) ) {
+		// 0 excluded: ambiguous vs O in mixed pools; leading zeros confuse parseInt callers
 		seed = `${seed}${'123456789'.repeat( 4 )}`; }
 	if ( type.includes( 'lower' ) ) {
 		seed = `${seed}abcdefghijklmnopqrstuvwxyz`; }
@@ -131,9 +132,9 @@ export function templify( template, obj ) {
 	let output = template;
 	keys.forEach( function( key, idx ) {
 		const val = obj[key];
-		output = output.replace( new RegExp( utils.hench.regex.escape( '{{' + key + '}}' ), 'gmu' ), val );
-		output = output.replace( new RegExp( utils.hench.regex.escape( '%%' + key + '%%' ), 'gmu' ), val );
-		output = output.replace( new RegExp( utils.hench.regex.escape( '%' + key + '%' ), 'gmu' ), val );
+		output = output.replace( new RegExp( utils.hench.regex.escape( '{{' + key + '}}' ), 'gmu' ), () => val );
+		output = output.replace( new RegExp( utils.hench.regex.escape( '%%' + key + '%%' ), 'gmu' ), () => val );
+		output = output.replace( new RegExp( utils.hench.regex.escape( '%' + key + '%' ), 'gmu' ), () => val );
 	});
 
 	// Clean up

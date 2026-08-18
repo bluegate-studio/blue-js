@@ -10,15 +10,24 @@ utils.hench.debounce({
 
  */
 export function timeout({ callback, timeout_ms, payload }) {
-    let timeout;
-    return (...params) => {
-        // console.log( { params, payload } );
-        if (timeout) { 
-            clearTimeout( timeout ); }
-        timeout = setTimeout(() => {
-            callback({ payload, params });
+    let timer;
+    const debounced = function(...params) {
+        const context = this;
+        if (timer) { 
+            clearTimeout( timer ); }
+        timer = setTimeout(() => {
+            callback.call(context, { payload, params });
         }, ( timeout_ms || 360 ));
     };
+
+    debounced.cancel = () => {
+        if (timer) {
+            clearTimeout( timer );
+            timer = null;
+        }
+    };
+
+    return debounced;
 }
 
 // export function debounce_by_frame( callback, payload ) {
