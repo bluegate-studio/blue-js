@@ -167,7 +167,7 @@ export function are_equal( a, b ) {
 
 export function to_array( input ) {
 
-	input = utils.hench.object.valid( input );
+	input = clone( input );
 
 	let output = [];
 	for ( const key in input ) {

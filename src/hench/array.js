@@ -183,7 +183,7 @@ export function filter( input, by ) {
 	input = utils.hench.array.valid( input );
 	by = utils.hench.array.valid( by );
 
-	let list = [...input];
+	let list = clone( input );
 
 	by = by
 		.map(( obj ) => {
@@ -241,7 +241,7 @@ export function random( input ) {
 
 export function shuffle( input ) {
 	input = utils.hench.array.valid( input );
-	let output = [...input];
+	let output = clone( input );
 
 	var j, x, i;
 	for ( let i = ( output.length - 1 ); i > 0; i-- ) {
