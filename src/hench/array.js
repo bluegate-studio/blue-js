@@ -1,12 +1,20 @@
 import * as utils from '../_.js';
 
-export function valid( input, clone ) {
+export function clone( input ) {
+	try {
+		return JSON.parse( JSON.stringify( valid( input ) ) );
+	} catch(err) {
+		return [];
+	}
+}
+
+export function valid( input, should_clone ) {
 
 	if ( !( fathom( input ) ) ) {
 		return []; }
 
-	if ( ( true === clone ) || 'clone' == clone ) {
-		return [...input]; }
+	if ( ( true === should_clone ) || 'clone' == should_clone ) {
+		return clone( input ); }
 
 	return input;
 
@@ -110,11 +118,6 @@ export function from_csv( input ) {
 
 	// return output;
 
-}
-
-
-export function clone( input ) {
-	return JSON.parse( JSON.stringify( valid( input ) ) );
 }
 
 export function are_equal( a, b, sort ) {
