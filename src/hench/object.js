@@ -172,7 +172,10 @@ export function to_array( input ) {
 	let output = [];
 	for ( const key in input ) {
 		let item = input[key];
-		item['__key'] = key;
+		if ( typeof item === 'object' && item !== null ) {
+			item['__key'] = key; }
+		else {
+			item = { __value: item, __key: key }; }
 		output.push( item );
 	}
 

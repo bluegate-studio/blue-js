@@ -60,7 +60,7 @@ export function from_display({ input, accuracy }) {
 	value = value.replace( /[ $,]/gmu, '' );
 	value = utils.hench.number.valid( value, 'float' );
 
-	const output = ( value * ( 10 ** accuracy ) );
+	const output = Math.round( value * ( 10 ** accuracy ) );
 
 	return output;
 
@@ -78,6 +78,6 @@ export function with_tax({ input, tax }) {
 	if ( tax < 1 ) {
 		tax = 20; }
 
-	return utils.hench.number.valid( ( ( 100 + tax ) * input ) / 100 );
+	return Math.round( ( ( 100 + tax ) * input ) / 100 );
 
 }

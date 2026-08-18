@@ -60,8 +60,8 @@ export function fathom(input, type) {
 
 export function random(min, max) {
 
-    min = Math.ceil(min);
-    max = Math.floor(max);
+    min = Math.ceil( valid( min ) );
+    max = Math.floor( valid( max ) );
 
     return (Math.floor(Math.random() * (max - min + 1)) + min);
 
@@ -96,8 +96,7 @@ export function nearest_in_array({ needle, haystack }) {
 export function nearest_next({ needle, haystack }) {
 
     needle = float(needle);
-    haystack = utils.hench.array.valid(haystack);
-    haystack = haystack.sort((l, r) => utils.hench.compare_to_sort(l, r));
+    haystack = [...utils.hench.array.valid(haystack)].sort((l, r) => utils.hench.compare_to_sort(l, r));
 
 
     const nearest = nearest_in_array({ needle, haystack });
@@ -121,8 +120,7 @@ export function nearest_next({ needle, haystack }) {
 export function nearest_prev({ needle, haystack }) {
 
     needle = float(needle);
-    haystack = utils.hench.array.valid(haystack);
-    haystack = haystack.sort((l, r) => utils.hench.compare_to_sort(l, r));
+    haystack = [...utils.hench.array.valid(haystack)].sort((l, r) => utils.hench.compare_to_sort(l, r));
 
 
     const nearest = nearest_in_array({ needle, haystack });

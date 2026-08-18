@@ -48,6 +48,8 @@ export function search( input )  {
 
 }
 
+// strips SQL comments and collapses whitespace — NOT injection protection
+//
 export function sql( input )  {
 
     let sanitised = utils.hench.string.valid( input );
@@ -74,7 +76,7 @@ export function url( input )  {
         let params = criterion.split( ':::' );
         let func = params.shift();
         if ( !( this[func] instanceof Function ) ) {
-            return; }
+            continue; }
         
         sanitised = this[func]( sanitised, params );
 
@@ -97,7 +99,7 @@ export function phone( input )  {
                     .replace( / {2,}/gmu, ' ' )
                     .replace( /-{2,}/gmu, '-' )
                     .replace( /[\r\n\t\xa0]+/g, '' )
-                    .substr( 0, 24 );
+                    .slice( 0, 24 );
     if ( hasPlus ) {
         sanitised = `+${sanitised}`; }
 
@@ -120,7 +122,7 @@ export function currency( input )  {
                     .replace( /,{2,}/gmu, ',' )
                     .replace( /\.{2,}/gmu, '.' )
                     .replace( /[\r\n\t\xa0]+/g, '' )
-                    .substr( 0, 24 );
+                    .slice( 0, 24 );
     // if ( hasPlus ) {
     //     sanitised = `+${sanitised}`; }
 
@@ -170,7 +172,7 @@ export function float( input, params )  {
     let len = sanitised.length;
     let lenHead = Math.min( 4, sanitised.length );
     let lenMin = utils.hench.string.valid( min ).length;
-    let lenMax = utils.hench.string.valid( min ).length;
+    let lenMax = utils.hench.string.valid( max ).length;
 
     let skip = sanitised.slice(0,lenHead).split('').some( char => [ '-', '+', '.', '0' ].includes( char ) );
     if ( true === skip ) {
@@ -201,7 +203,7 @@ export function int( input, params )  {
     let len = sanitised.length;
     let lenHead = Math.min( 4, sanitised.length );
     let lenMin = utils.hench.string.valid( min ).length;
-    let lenMax = utils.hench.string.valid( min ).length;
+    let lenMax = utils.hench.string.valid( max ).length;
 
     let skip = sanitised.slice(0,lenHead).split('').some( char => [ '-', '+', '.', '0' ].includes( char ) );
     if ( true === skip ) {
@@ -251,7 +253,7 @@ export function substr( input, params )  {
     let start = utils.hench.number.valid( params[0] );
     let length = utils.hench.number.valid( params[1] );
     
-    sanitised = sanitised.substr( start, length );
+    sanitised = sanitised.slice( start, ( start + length ) );
 
     return sanitised;
 
@@ -265,8 +267,11 @@ export function substring( input, params )  {
 
     let start = utils.hench.number.valid( params[0] );
     let end = utils.hench.number.valid( params[1] );
+
+    if ( end < 1 ) {
+        return sanitised.substring( start ); }
     
-    sanitised = sanitised.substr( start, end );
+    sanitised = sanitised.substring( start, end );
 
     return sanitised;
 

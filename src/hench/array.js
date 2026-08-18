@@ -316,7 +316,7 @@ export function unique({ list, by }) {
 	let obj = {};
 	for ( const m of list ) {
 		const key = m[by];
-		if ( !( key ) ) {
+		if ( key == null ) {
 			continue; }
 		obj[key] = m;
 	}
