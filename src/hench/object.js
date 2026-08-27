@@ -20,9 +20,13 @@ export function valid( input, should_clone ) {
 
 }
 
-
 export function fathom( input ) {
-	return ( Object === utils.hench.type_of( input ) ); }
+	if ( typeof input !== 'object' || input === null || Array.isArray( input ) ) {
+		return false; }
+	const proto = Object.getPrototypeOf( input );
+	return ( proto === null || proto === Object.prototype ); 
+}
+
 
 
 export function empty( input ) {
@@ -43,53 +47,53 @@ export function values_not_empty( input ) {
 
 export function nested({ needle, haystack }) {
 
-    if ( !haystack || typeof haystack !== 'object' ) return null;
+	if ( !haystack || typeof haystack !== 'object' ) return null;
 
-    if ( typeof needle === 'string' ) {
+	if ( typeof needle === 'string' ) {
 
-        // Fast path: no dot → single-level access
-        if ( needle.indexOf( '.' ) === -1 ) {
-            const val = haystack[ needle ];
-            return val == null ? null : val;
-        }
+		// Fast path: no dot → single-level access
+		if ( needle.indexOf( '.' ) === -1 ) {
+			const val = haystack[ needle ];
+			return val == null ? null : val;
+		}
 
-        // Multi-level: walk the dot path
-        let cursor = haystack;
-        let start  = 0;
-        for ( let i = 0, len = needle.length; i <= len; i++ ) {
-            if ( i === len || needle.charCodeAt( i ) === 46 ) {
-                cursor = cursor[ needle.substring( start, i ) ];
-                if ( cursor == null ) return null;
-                start = i + 1;
-            }
-        }
-        return cursor;
+		// Multi-level: walk the dot path
+		let cursor = haystack;
+		let start  = 0;
+		for ( let i = 0, len = needle.length; i <= len; i++ ) {
+			if ( i === len || needle.charCodeAt( i ) === 46 ) {
+				cursor = cursor[ needle.substring( start, i ) ];
+				if ( cursor == null ) return null;
+				start = i + 1;
+			}
+		}
+		return cursor;
 
-    }
+	}
 
-    if ( Array.isArray( needle ) ) {
-        let cursor = haystack;
-        for ( let i = 0; i < needle.length; i++ ) {
-            cursor = cursor[ needle[ i ] ];
-            if ( cursor == null ) return null;
-        }
-        return cursor;
-    }
+	if ( Array.isArray( needle ) ) {
+		let cursor = haystack;
+		for ( let i = 0; i < needle.length; i++ ) {
+			cursor = cursor[ needle[ i ] ];
+			if ( cursor == null ) return null;
+		}
+		return cursor;
+	}
 
-    return null;
+	return null;
 
 }
 
 
 export function nested__human_version({of, from}) { 
 
-    let keys = utils.hench.array.valid( of );
-    if ( keys.length < 1 ) {
-        keys = utils.hench.string.valid( of ).split( '.' ); }
+	let keys = utils.hench.array.valid( of );
+	if ( keys.length < 1 ) {
+		keys = utils.hench.string.valid( of ).split( '.' ); }
 
-    const obj = utils.hench.object.valid( from )
+	const obj = utils.hench.object.valid( from )
 
-    return keys.reduce((xs, x) => (xs && xs[x]) ? xs[x] : null, obj);
+	return keys.reduce((xs, x) => (xs && xs[x]) ? xs[x] : null, obj);
 
 //
 // https://medium.com/javascript-inside/safely-accessing-deeply-nested-values-in-javascript-99bf72a0855a
@@ -104,12 +108,6 @@ export function nested__human_version({of, from}) {
  * 
  */
 export function to_json( input, indent ) {
-
-	let type = utils.hench.type_of( input );
-
-	if ( ( Array !== type ) && ( Object !== type ) ) {
-		return ''; }
-
 
 	let output = '';
 
@@ -135,13 +133,10 @@ export function to_json( input, indent ) {
  */
 export function from_json( input ) {
 
-	let type = utils.hench.type_of( input );
-
-	if ( Object === type ) {
+	if ( utils.hench.array.fathom( input ) ) {
 		return input; }
-	else if ( Array === type ) {
+	if ( utils.hench.object.fathom( input ) ) {
 		return input; }
-
 
 	let output = {};
 
@@ -185,15 +180,15 @@ export function to_array( input ) {
 
 export function from_xml( input ) {
 	
-    return {};
+	return {};
 
-    // 
-    // Disabled temporarily, because of external dependency
-    // 
-    // import { XMLParser } from 'fast-xml-parser';
-    // 
+	// 
+	// Disabled temporarily, because of external dependency
+	// 
+	// import { XMLParser } from 'fast-xml-parser';
+	// 
 	
-    // input = utils.hench.string.valid( input );
+	// input = utils.hench.string.valid( input );
 	// if ( input.length < 1 ) {
 	// 	return {}; }
 

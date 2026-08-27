@@ -21,7 +21,7 @@ export function valid( input, should_clone ) {
 }
 
 export function fathom( input ) {
-	return ( Array === utils.hench.type_of( input ) ); }
+	return Array.isArray( input ); }
 
 export function empty( input ) {
 	return ( valid( input ).length < 1 ); }
@@ -36,12 +36,6 @@ export function not_empty( input ) {
  * 
  */
 export function to_json( input, indent ) {
-
-	let type = utils.hench.type_of( input );
-
-	if ( ( Array !== type ) && ( Object !== type ) ) {
-		return ''; }
-
 
 	let output = '';
 
@@ -67,13 +61,10 @@ export function to_json( input, indent ) {
  */
 export function from_json( input ) {
 
-	let type = utils.hench.type_of( input );
-
-	if ( Object === type ) {
+	if ( utils.hench.array.fathom( input ) ) {
 		return input; }
-	else if ( Array === type ) {
+	if ( utils.hench.object.fathom( input ) ) {
 		return input; }
-
 
 	let output = {};
 
@@ -126,9 +117,7 @@ export function are_equal( a, b, sort ) {
 	// https://stackoverflow.com/a/16436975
 	// 
 
-	if ( Array !== utils.hench.type_of( a ) ) {
-		return false; }
-	if ( Array !== utils.hench.type_of( b ) ) {
+	if ( ! fathom( a ) || ! fathom( b ) ) {
 		return false; }
 	
 	let aa = valid( a, true );
@@ -343,7 +332,7 @@ export function min({ haystack, needle }) {
     for ( const item of haystack ) {
         const val = utils.hench.object.nested({ needle, haystack: item });
         if ( val != null && val !== '' ) {
-            is_number = ( Number === utils.hench.type_of( val ) );
+            is_number = utils.hench.number.fathom( val );
             seed = is_number ? Infinity : val;
             break;
         }
@@ -376,7 +365,7 @@ export function max({ haystack, needle }) {
     for ( const item of haystack ) {
         const val = utils.hench.object.nested({ needle, haystack: item });
         if ( val != null && val !== '' ) {
-            is_number = ( Number === utils.hench.type_of( val ) );
+            is_number = utils.hench.number.fathom( val );
             seed = is_number ? -Infinity : val;
             break;
         }

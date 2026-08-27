@@ -2,25 +2,19 @@ import * as utils from '../_.js';
 
 export function valid( input ) {
 
-	const type = utils.hench.type_of( input );
+	if ( fathom( input ) ) {
+		return input; }
 
-	let output = '';
+	if ( utils.hench.number.fathom( input ) ) {
+		return input.toString(); }
 
-	if ( String === type ) {
-		output = input; }
-
-	else if ( Number === type ) {
-		try {
-			output = input.toString();
-		} catch( err ) { output = ''; } }
-
-	return output;
+	return '';
 
 }
 
 
 export function fathom( input ) {
-	return ( String === utils.hench.type_of( input ) ); }
+	return ( typeof input === 'string' || input instanceof String ); }
 
 export function random({ len, type, seed }) {
 
