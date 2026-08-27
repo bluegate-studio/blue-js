@@ -72,22 +72,24 @@ utils.hench.url.valid( anything )      // → valid URL string or ''
 
 #### `string.valid( input )`
 
-Coerces any input to a string. Numbers are converted via `.toString()`. Everything else returns `''`.
+Coerces any input to a string. Finite numbers are converted via `.toString()`. Everything else (including `null`, `undefined`, `NaN`, `Infinity`) returns `''`.
 
 ```js
-string.valid( 'hello' )   // → 'hello'
-string.valid( 42 )        // → '42'
+string.valid( 'hello' )    // → 'hello'
+string.valid( 42 )         // → '42'
 string.valid( null )       // → ''
 string.valid( undefined )  // → ''
+string.valid( NaN )        // → ''
 ```
 
 #### `string.fathom( input )`
 
-Returns `true` if the input is a string.
+Returns `true` if the input is a string primitive or `String` instance.
 
 ```js
-string.fathom( 'hello' )  // → true
-string.fathom( 42 )       // → false
+string.fathom( 'hello' )              // → true
+string.fathom( new String('hello') )  // → true
+string.fathom( 42 )                   // → false
 ```
 
 #### `string.random({ len, type, seed })`
@@ -163,7 +165,12 @@ array.valid( 'not an array' )     // → []
 
 #### `array.fathom( input )`
 
-Returns `true` if the input is an array.
+Returns `true` if the input is an array (via `Array.isArray()`).
+
+```js
+array.fathom( [1, 2, 3] )   // → true
+array.fathom( 'not array' )  // → false
+```
 
 #### `array.empty( input )` / `array.not_empty( input )`
 
@@ -348,7 +355,15 @@ object.valid( 'nope' )          // → {}
 
 #### `object.fathom( input )`
 
-Returns `true` if the input is a plain object.
+Returns `true` if the input is a plain object (`{}` or `Object.create(null)`). Rejects `null`, arrays, and complex class or prototype instances.
+
+```js
+object.fathom( { a: 1 } )             // → true
+object.fathom( Object.create(null) )  // → true
+object.fathom( [1, 2] )               // → false
+object.fathom( null )                 // → false
+object.fathom( new Date() )           // → false
+```
 
 #### `object.empty( input )` / `object.not_empty( input )`
 
@@ -441,19 +456,29 @@ items.sort(( a, b ) => object.compare_to_sort( a, b, ['age:::desc', 'name'] ));
 
 #### `number.valid( input, type )`
 
-Coerces to a number. Returns `0` if the input can't be parsed. The `type` parameter controls parsing: `'int'` (default) uses `parseInt`, `'float'` uses `parseFloat`.
+Coerces to a number using `Number( input )`. Returns `0` if the input cannot be parsed or is not finite. The `type` parameter controls the format: `'int'` (default) truncates to integer via `Math.trunc`, while `'float'` retains decimal precision.
 
 ```js
 number.valid( '42' )             // → 42
 number.valid( '3.14', 'float' )  // → 3.14
+number.valid( '3.14' )           // → 3 (int by default)
+number.valid( '1234abc' )        // → 0 (strict conversion)
 number.valid( 'abc' )            // → 0
 number.valid( NaN )              // → 0
 number.valid( Infinity )         // → 0
 ```
 
-#### `number.fathom( input, type )`
+#### `number.fathom( input )`
 
-Returns `true` if the input can be parsed as a valid, finite number. Respects `type` (`'int'` or `'float'`).
+Returns `true` if the input is a finite number primitive.
+
+```js
+number.fathom( 42 )        // → true
+number.fathom( 3.14 )      // → true
+number.fathom( '42' )      // → false
+number.fathom( NaN )       // → false
+number.fathom( Infinity )  // → false
+```
 
 #### `number.int( input )` / `number.float( input )`
 
