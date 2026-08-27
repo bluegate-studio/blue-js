@@ -18,9 +18,7 @@ export function shift_zone({timestamp, shift_by}) {
 	timestamp = utils.hench.number.valid( timestamp );
 	shift_by = utils.hench.number.valid( shift_by );
 
-	const output = ( timestamp + ( shift_by * 3600 * 1000 ) );
-
-	return output;
+	return ( timestamp + ( shift_by * 3600 * 1000 ) );
 
 }
 
@@ -29,9 +27,7 @@ export function to_dash({timestamp, shift_by}) {
 	if ( utils.hench.string.valid( timestamp ).includes( '-' ) ) {
 		timestamp = from_dash({ timestamp, shift_by }); }
 
-	timestamp = utils.hench.number.valid( timestamp );
-	if ( utils.hench.number.fathom( shift_by ) ) {
-		timestamp = shift_zone({timestamp, shift_by}); }
+	timestamp = shift_zone({timestamp, shift_by});
 
 	const dt = new Date( timestamp );
 	const iso = dt.toISOString();
@@ -58,8 +54,7 @@ export function from_dash({ timestamp, shift_by }) {
 
 	timestamp = dt.getTime();
 
-	if ( utils.hench.number.fathom( shift_by ) ) {
-		timestamp = shift_zone({timestamp, shift_by}); }
+	timestamp = shift_zone({timestamp, shift_by});
 
 	return timestamp;
 

@@ -3,48 +3,48 @@ import * as utils from '../_.js';
 
 export function email( input )  {
 
-    let sanitised = utils.hench.string.valid( input );
+	let sanitised = utils.hench.string.valid( input );
 
-    let criteria = [ 'clean:::minify', 'space:::0', 'line:::0', 'substr:::0:::255', 'latinise', 'lower:::en' ];
-    for ( const criterion of criteria ) {
+	let criteria = [ 'clean:::minify', 'space:::0', 'line:::0', 'substr:::0:::255', 'latinise', 'lower:::en' ];
+	for ( const criterion of criteria ) {
 
-        let params = criterion.split( ':::' );
-        let func = params.shift();
-        if ( !( this[func] instanceof Function ) ) {
-            continue; }
-        
-        sanitised = this[func]( sanitised, params );
+		let params = criterion.split( ':::' );
+		let func = params.shift();
+		if ( !( this[func] instanceof Function ) ) {
+			continue; }
+		
+		sanitised = this[func]( sanitised, params );
 
-    }
+	}
 
-    return sanitised;
+	return sanitised;
 
 }
 
 export function subject( input )  {
-    return utils.hench.string.minify( input )
-                    .replace( /^\s*(?:(?:re|fwd?|fw|aw|vs|res|rsp|betreff|rif|resp|antw|wg|ilg|ogl|r|ip|ab|inviato|da|tr|env|correo|res|sv|ynt|ilt|yanit|ileti|cevap|İlt|İleti|İLT|İLETİ)[\s:*-]+\s*)+/i, '' )
-                    .trim();
+	return utils.hench.string.minify( input )
+					.replace( /^\s*(?:(?:re|fwd?|fw|aw|vs|res|rsp|betreff|rif|resp|antw|wg|ilg|ogl|r|ip|ab|inviato|da|tr|env|correo|res|sv|ynt|ilt|yanit|ileti|cevap|İlt|İleti|İLT|İLETİ)[\s:*-]+\s*)+/i, '' )
+					.trim();
 }
 
 
 export function search( input )  {
 
-    let sanitised = utils.hench.string.valid( input );
+	let sanitised = utils.hench.string.valid( input );
 
-    let criteria = [ 'clean', 'space:::1', 'line:::0', 'substr:::0:::255', 'latinise', 'lower:::en' ];
-    for ( const criterion of criteria ) {
+	let criteria = [ 'clean', 'space:::1', 'line:::0', 'substr:::0:::255', 'latinise', 'lower:::en' ];
+	for ( const criterion of criteria ) {
 
-        let params = criterion.split( ':::' );
-        let func = params.shift();
-        if ( !( this[func] instanceof Function ) ) {
-            continue; }
-        
-        sanitised = this[func]( sanitised, params );
+		let params = criterion.split( ':::' );
+		let func = params.shift();
+		if ( !( this[func] instanceof Function ) ) {
+			continue; }
+		
+		sanitised = this[func]( sanitised, params );
 
-    }
+	}
 
-    return sanitised;
+	return sanitised;
 
 }
 
@@ -52,325 +52,325 @@ export function search( input )  {
 //
 export function sql( input )  {
 
-    let sanitised = utils.hench.string.valid( input );
+	let sanitised = utils.hench.string.valid( input );
 
-    sanitised = sanitised
-        .replace(/^\s*--.*$/gmu, ' ')
-        .replace( /[\r\n\t\xa0]/gmu, ' ' )
-        .replace( /\s+/gmu, ' ' )
-        .replace( / {2,}/gmu, ' ' )
-        .trim();
+	sanitised = sanitised
+		.replace(/^\s*--.*$/gmu, ' ')
+		.replace( /[\r\n\t\xa0]/gmu, ' ' )
+		.replace( /\s+/gmu, ' ' )
+		.replace( / {2,}/gmu, ' ' )
+		.trim();
 
-    return sanitised;
+	return sanitised;
 
 }
 
 
 export function url( input )  {
-    
-    let sanitised = utils.hench.string.valid( input );
+	
+	let sanitised = utils.hench.string.valid( input );
 
-    let criteria = [ 'clean:::minify', 'space:::0', 'line:::0', 'substr:::0:::2048', 'latinise', 'lower:::en' ];
-    for ( const criterion of criteria ) {
+	let criteria = [ 'clean:::minify', 'space:::0', 'line:::0', 'substr:::0:::2048', 'latinise', 'lower:::en' ];
+	for ( const criterion of criteria ) {
 
-        let params = criterion.split( ':::' );
-        let func = params.shift();
-        if ( !( this[func] instanceof Function ) ) {
-            continue; }
-        
-        sanitised = this[func]( sanitised, params );
+		let params = criterion.split( ':::' );
+		let func = params.shift();
+		if ( !( this[func] instanceof Function ) ) {
+			continue; }
+		
+		sanitised = this[func]( sanitised, params );
 
-    }
+	}
 
-    return sanitised;
+	return sanitised;
 
 }
 
 
 export function phone( input )  {
 
-    // +1 (212) 451-2692
-    // 
-    let sanitised = utils.hench.string.valid( input );
+	// +1 (212) 451-2692
+	// 
+	let sanitised = utils.hench.string.valid( input );
 
-    let hasPlus = /^\+/.test( sanitised );
-    sanitised = sanitised
-                    .replace( /[^0-9 ()-]+/gmu, '' )
-                    .replace( / {2,}/gmu, ' ' )
-                    .replace( /-{2,}/gmu, '-' )
-                    .replace( /[\r\n\t\xa0]+/g, '' )
-                    .slice( 0, 24 );
-    if ( hasPlus ) {
-        sanitised = `+${sanitised}`; }
+	let hasPlus = /^\+/.test( sanitised );
+	sanitised = sanitised
+					.replace( /[^0-9 ()-]+/gmu, '' )
+					.replace( / {2,}/gmu, ' ' )
+					.replace( /-{2,}/gmu, '-' )
+					.replace( /[\r\n\t\xa0]+/g, '' )
+					.slice( 0, 24 );
+	if ( hasPlus ) {
+		sanitised = `+${sanitised}`; }
 
-    return sanitised;
+	return sanitised;
 
 }
 
 
 export function currency( input )  {
 
-    // $ 1,234.56
-    // 
-    let sanitised = utils.hench.string.valid( input );
+	// $ 1,234.56
+	// 
+	let sanitised = utils.hench.string.valid( input );
 
-    // let hasPlus = /^\+/.test( sanitised );
-    sanitised = sanitised
-                    .replace( /[^0-9 $,.-]+/gmu, '' )
-                    .replace( / {2,}/gmu, ' ' )
-                    .replace( /-{2,}/gmu, '-' )
-                    .replace( /,{2,}/gmu, ',' )
-                    .replace( /\.{2,}/gmu, '.' )
-                    .replace( /[\r\n\t\xa0]+/g, '' )
-                    .slice( 0, 24 );
-    // if ( hasPlus ) {
-    //     sanitised = `+${sanitised}`; }
+	// let hasPlus = /^\+/.test( sanitised );
+	sanitised = sanitised
+					.replace( /[^0-9 $,.-]+/gmu, '' )
+					.replace( / {2,}/gmu, ' ' )
+					.replace( /-{2,}/gmu, '-' )
+					.replace( /,{2,}/gmu, ',' )
+					.replace( /\.{2,}/gmu, '.' )
+					.replace( /[\r\n\t\xa0]+/g, '' )
+					.slice( 0, 24 );
+	// if ( hasPlus ) {
+	//     sanitised = `+${sanitised}`; }
 
-    return sanitised;
+	return sanitised;
 
 }
 
 
 export function numeric( input )  {
-    
-    let sanitised = utils.hench.string.valid( input );
+	
+	let sanitised = utils.hench.string.valid( input );
 
-    // -1234.567
-    // 
-    sanitised = sanitised
-                    .replace( /,/gmu, '.' )
-                    .replace( /[^0-9\.\-]+/gmu, '' )
+	// -1234.567
+	// 
+	sanitised = sanitised
+					.replace( /,/gmu, '.' )
+					.replace( /[^0-9\.\-]+/gmu, '' )
 
-    let positionOfPeriod = sanitised.indexOf( '.' );
-    let isNegative = /^\-/.test( sanitised );
+	let positionOfPeriod = sanitised.indexOf( '.' );
+	let isNegative = /^\-/.test( sanitised );
 
-    sanitised = sanitised
-                    .replace( /[^0-9]+/gmu, '' )
-                    .replace( /[\r\n\t\xa0]+/g, '' );
+	sanitised = sanitised
+					.replace( /[^0-9]+/gmu, '' )
+					.replace( /[\r\n\t\xa0]+/g, '' );
 
-    if ( !( sanitised ) || ( sanitised.length < 1 ) ) {
-        sanitised = '0'; }
+	if ( !( sanitised ) || ( sanitised.length < 1 ) ) {
+		sanitised = '0'; }
 
-    if ( isNegative ) {
-        sanitised = ( '-' + sanitised ); }
-    if ( positionOfPeriod > -1 ) {
-        sanitised = [sanitised.slice( 0, positionOfPeriod ), '.', sanitised.slice( positionOfPeriod )].join( '' ); }
+	if ( isNegative ) {
+		sanitised = ( '-' + sanitised ); }
+	if ( positionOfPeriod > -1 ) {
+		sanitised = [sanitised.slice( 0, positionOfPeriod ), '.', sanitised.slice( positionOfPeriod )].join( '' ); }
 
-    return sanitised;
+	return sanitised;
 
 }
 
 
 export function float( input, params )  {
-    
-    let sanitised = utils.hench.string.valid( input );
-    params = utils.hench.array.valid( params );
-    
-    let min = params[0];
-    let max = params[1];
+	
+	let sanitised = utils.hench.string.valid( input );
+	params = utils.hench.array.valid( params );
+	
+	let min = params[0];
+	let max = params[1];
 
-    let len = sanitised.length;
-    let lenHead = Math.min( 4, sanitised.length );
-    let lenMin = utils.hench.string.valid( min ).length;
-    let lenMax = utils.hench.string.valid( max ).length;
+	let len = sanitised.length;
+	let lenHead = Math.min( 4, sanitised.length );
+	let lenMin = utils.hench.string.valid( min ).length;
+	let lenMax = utils.hench.string.valid( max ).length;
 
-    let skip = sanitised.slice(0,lenHead).split('').some( char => [ '-', '+', '.', '0' ].includes( char ) );
-    if ( true === skip ) {
-        if ( ( len <= lenMin ) || ( len <= lenMax ) ) {
-            return false; } }
+	let skip = sanitised.slice(0,lenHead).split('').some( char => [ '-', '+', '.', '0' ].includes( char ) );
+	if ( true === skip ) {
+		if ( ( len <= lenMin ) || ( len <= lenMax ) ) {
+			return false; } }
 
-    sanitised = utils.hench.number.valid( sanitised, 'float' );
-        
-    if ( utils.hench.number.fathom( min, 'float' ) ) {
-        sanitised = Math.max( min, sanitised ); }
+	sanitised = utils.hench.number.float( sanitised );
 
-    if ( utils.hench.number.fathom( max, 'float' ) ) {
-        sanitised = Math.min( max, sanitised ); }
+	min = Number( min );
+	max = Number( max );
 
-    return sanitised;
+	min = Number.isFinite( min ) ? min : -Infinity;
+	max = Number.isFinite( max ) ? max : Infinity;
+
+	return Math.min( Math.max( min, sanitised ), max );
 
 }
 
 
 export function int( input, params )  {
-    
-    let sanitised = utils.hench.string.valid( input );
-    params = utils.hench.array.valid( params );
-    
-    let min = params[0];
-    let max = params[1];
+	
+	let sanitised = utils.hench.string.valid( input );
+	params = utils.hench.array.valid( params );
+	
+	let min = params[0];
+	let max = params[1];
 
-    let len = sanitised.length;
-    let lenHead = Math.min( 4, sanitised.length );
-    let lenMin = utils.hench.string.valid( min ).length;
-    let lenMax = utils.hench.string.valid( max ).length;
+	let len = sanitised.length;
+	let lenHead = Math.min( 4, sanitised.length );
+	let lenMin = utils.hench.string.valid( min ).length;
+	let lenMax = utils.hench.string.valid( max ).length;
 
-    let skip = sanitised.slice(0,lenHead).split('').some( char => [ '-', '+', '.', '0' ].includes( char ) );
-    if ( true === skip ) {
-        if ( ( len <= lenMin ) || ( len <= lenMax ) ) {
-            return false; } }
+	let skip = sanitised.slice(0,lenHead).split('').some( char => [ '-', '+', '.', '0' ].includes( char ) );
+	if ( true === skip ) {
+		if ( ( len <= lenMin ) || ( len <= lenMax ) ) {
+			return false; } }
 
-    sanitised = utils.hench.number.valid( sanitised, 'int' );
-        
-    if ( utils.hench.number.fathom( min, 'int' ) ) {
-        sanitised = Math.max( min, sanitised ); }
+	sanitised = utils.hench.number.int( sanitised );
 
-    if ( utils.hench.number.fathom( max, 'int' ) ) {
-        sanitised = Math.min( max, sanitised ); }
+	min = Number( min );
+	max = Number( max );
 
-    return sanitised;
+	min = Number.isFinite( min ) ? min : -Infinity;
+	max = Number.isFinite( max ) ? max : Infinity;
+
+	return Math.min( Math.max( min, sanitised ), max );
 
 }
 
 export function latinise( input )  {
-    return utils.linguist.latinise( input ); }
+	return utils.linguist.latinise( input ); }
 
 export function upper( input, params )  {
-    let locale = utils.hench.string.valid( params?.[0] );
-    if ( locale.length < 1 ) {
-        locale = 'en'; }
-    return utils.hench.string.valid( input ).toLocaleUpperCase( locale ); }
+	let locale = utils.hench.string.valid( params?.[0] );
+	if ( locale.length < 1 ) {
+		locale = 'en'; }
+	return utils.hench.string.valid( input ).toLocaleUpperCase( locale ); }
 export function lower( input, params )  {
-    let locale = utils.hench.string.valid( params?.[0] );
-    if ( locale.length < 1 ) {
-        locale = 'en'; }
-    return utils.hench.string.valid( input ).toLocaleLowerCase( locale ); }
+	let locale = utils.hench.string.valid( params?.[0] );
+	if ( locale.length < 1 ) {
+		locale = 'en'; }
+	return utils.hench.string.valid( input ).toLocaleLowerCase( locale ); }
 export function title( input, params )  {
-    let locale = utils.hench.string.valid( params?.[0] );
-    if ( locale.length < 1 ) {
-        locale = 'en'; }
-    return utils.linguist.title_case( input, locale ); }
+	let locale = utils.hench.string.valid( params?.[0] );
+	if ( locale.length < 1 ) {
+		locale = 'en'; }
+	return utils.linguist.title_case( input, locale ); }
 
 
 export function trim( input )  {
-    return utils.hench.string.valid( input ).trim(); }
+	return utils.hench.string.valid( input ).trim(); }
 
 export function substr( input, params )  {
-    
-    let sanitised = utils.hench.string.valid( input );
-    params = utils.hench.array.valid( params );
+	
+	let sanitised = utils.hench.string.valid( input );
+	params = utils.hench.array.valid( params );
 
-    let start = utils.hench.number.valid( params[0] );
-    let length = utils.hench.number.valid( params[1] );
-    
-    sanitised = sanitised.slice( start, ( start + length ) );
+	let start = utils.hench.number.valid( params[0] );
+	let length = utils.hench.number.valid( params[1] );
+	
+	sanitised = sanitised.slice( start, ( start + length ) );
 
-    return sanitised;
+	return sanitised;
 
 }
 
 
 export function substring( input, params )  {
-    
-    let sanitised = utils.hench.string.valid( input );
-    params = utils.hench.array.valid( params );
+	
+	let sanitised = utils.hench.string.valid( input );
+	params = utils.hench.array.valid( params );
 
-    let start = utils.hench.number.valid( params[0] );
-    let end = utils.hench.number.valid( params[1] );
+	let start = utils.hench.number.valid( params[0] );
+	let end = utils.hench.number.valid( params[1] );
 
-    if ( end < 1 ) {
-        return sanitised.substring( start ); }
-    
-    sanitised = sanitised.substring( start, end );
+	if ( end < 1 ) {
+		return sanitised.substring( start ); }
+	
+	sanitised = sanitised.substring( start, end );
 
-    return sanitised;
+	return sanitised;
 
 }
 
 
 export function space( input, params )  {
-    
-    let sanitised = utils.hench.string.valid( input );
-    params = utils.hench.array.valid( params );
+	
+	let sanitised = utils.hench.string.valid( input );
+	params = utils.hench.array.valid( params );
 
-    let length = Math.max( 0, utils.hench.number.valid( params[0] ) );
+	let length = Math.max( 0, utils.hench.number.valid( params[0] ) );
 
-    let search = new RegExp( ' {' + ( length + 1 ) + ',}', 'gmu' );
-    let replace = ' '.repeat( length );
-    sanitised = sanitised.replace( search, replace );
+	let search = new RegExp( ' {' + ( length + 1 ) + ',}', 'gmu' );
+	let replace = ' '.repeat( length );
+	sanitised = sanitised.replace( search, replace );
 
-    return sanitised;
+	return sanitised;
 
 }
 
 
 export function white( input, params )  {
 
-    let sanitised = utils.hench.string.valid( input );
-    params = utils.hench.array.valid( params );
+	let sanitised = utils.hench.string.valid( input );
+	params = utils.hench.array.valid( params );
 
-    let length = Math.max( 0, utils.hench.number.valid( params[0] ) );
+	let length = Math.max( 0, utils.hench.number.valid( params[0] ) );
 
-    let search = new RegExp( '\s{' + ( length + 1 ) + ',}', 'gmu' );
-    let replace = ' '.repeat( length );
-    sanitised = sanitised.replace( search, replace );
+	let search = new RegExp( '\s{' + ( length + 1 ) + ',}', 'gmu' );
+	let replace = ' '.repeat( length );
+	sanitised = sanitised.replace( search, replace );
 
-    return sanitised;
+	return sanitised;
 
 }
 
 
 export function line( input, params )  {
 
-    let sanitised = utils.hench.string.valid( input );
-    params = utils.hench.array.valid( params );
+	let sanitised = utils.hench.string.valid( input );
+	params = utils.hench.array.valid( params );
 
-    let length = Math.max( 0, utils.hench.number.valid( params[0] ) );
+	let length = Math.max( 0, utils.hench.number.valid( params[0] ) );
 
-    let search = new RegExp( '\n{' + ( length + 1 ) + ',}', 'gmu' );
-    let replace = '\n'.repeat( length );
-    sanitised = sanitised.replace( search, replace );
+	let search = new RegExp( '\n{' + ( length + 1 ) + ',}', 'gmu' );
+	let replace = '\n'.repeat( length );
+	sanitised = sanitised.replace( search, replace );
 
-    search = new RegExp( '\r{' + ( length + 1 ) + ',}', 'gmu' );
-    replace = '\r'.repeat( length );
-    sanitised = sanitised.replace( search, replace );
+	search = new RegExp( '\r{' + ( length + 1 ) + ',}', 'gmu' );
+	replace = '\r'.repeat( length );
+	sanitised = sanitised.replace( search, replace );
 
-    return sanitised;
+	return sanitised;
 
 }
 
 
 export function tab( input, params )  {
-    
-    let sanitised = utils.hench.string.valid( input );
-    params = utils.hench.array.valid( params );
+	
+	let sanitised = utils.hench.string.valid( input );
+	params = utils.hench.array.valid( params );
 
-    let length = Math.max( 0, utils.hench.number.valid( params[0] ) );
+	let length = Math.max( 0, utils.hench.number.valid( params[0] ) );
 
-    let search = new RegExp( '\t{' + ( length + 1 ) + ',}', 'gmu' );
-    let replace = '\t'.repeat( length );
-    sanitised = sanitised.replace( search, replace );
+	let search = new RegExp( '\t{' + ( length + 1 ) + ',}', 'gmu' );
+	let replace = '\t'.repeat( length );
+	sanitised = sanitised.replace( search, replace );
 
-    return sanitised;
+	return sanitised;
 
 }
 
 
 export function clean( input, params )  {
-    
-    let sanitised = utils.hench.string.valid( input );
-    params = utils.hench.array.valid( params );
+	
+	let sanitised = utils.hench.string.valid( input );
+	params = utils.hench.array.valid( params );
 
-    const strip_tags = params.includes( 'tags' );
-    const minify = params.includes( 'minify' );
-    const trim = params.includes( 'trim' );
+	const strip_tags = params.includes( 'tags' );
+	const minify = params.includes( 'minify' );
+	const trim = params.includes( 'trim' );
 
-    let search = new RegExp( '\xa0', 'gmu' );
-    let replace = ' ';
-    sanitised = sanitised.replace( search, replace );
+	let search = new RegExp( '\xa0', 'gmu' );
+	let replace = ' ';
+	sanitised = sanitised.replace( search, replace );
 
-    if ( true === strip_tags ) {
-        search = new RegExp( '<[^>]*>?', 'gmu' );
-        replace = ' ';
-        sanitised = sanitised.replace( search, replace ); }
+	if ( true === strip_tags ) {
+		search = new RegExp( '<[^>]*>?', 'gmu' );
+		replace = ' ';
+		sanitised = sanitised.replace( search, replace ); }
 
-    if ( true === minify ) {
-        sanitised = utils.hench.string.minify( sanitised ); }
+	if ( true === minify ) {
+		sanitised = utils.hench.string.minify( sanitised ); }
 
-    sanitised = sanitised.replace( / {2,}/gmu, ' ' );
-    if ( true === trim ) {
-        sanitised = sanitised.trim(); }
+	sanitised = sanitised.replace( / {2,}/gmu, ' ' );
+	if ( true === trim ) {
+		sanitised = sanitised.trim(); }
 
-    return sanitised;
+	return sanitised;
 
 }
