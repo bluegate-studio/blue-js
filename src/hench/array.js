@@ -50,7 +50,7 @@ export function to_json( input, indent ) {
 
 	} catch ( err ) { output = ''; }
 
-	return output;
+	return utils.hench.string.valid( output );
 
 }
 
