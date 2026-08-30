@@ -834,7 +834,7 @@ linguist.sanitise( input, ['float:::0:::100'] )
 |-----------|-------------|
 | `email` | Minify, strip spaces/newlines, latinise, lowercase. Max 255 chars. |
 | `subject` | Minify and strip email forwarding prefixes (Re:, Fwd:, etc.). |
-| `search` | Clean (no minify), allow single spaces, strip newlines, latinise, lowercase. Max 255 chars. |
+| `search` | Strip HTML tags, collapse whitespace/newlines (`clean:::tags:::minify:::trim`), latinise, lowercase. |
 | `sql` | Strip SQL comments, collapse whitespace. |
 | `url` | Minify, strip spaces/newlines, latinise, lowercase. Max 2048 chars. |
 | `phone` | Keep only digits, spaces, parentheses, dashes. Preserves leading `+`. Max 24 chars. |
