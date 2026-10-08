@@ -118,9 +118,13 @@ function nested__index( key ) {
 	return ( ( index >= 0 ) && ( utils.hench.string.valid( index ) === key ) );
 }
 
+function nested__slot({ parent, key }) {
+	return ( nested__index( key ) && ( utils.hench.number.int( key ) <= parent.length ) );
+}
+
 function nested__assign({ parent, key, value }) {
 
-	if ( utils.hench.array.fathom( parent ) && !( nested__index( key ) && ( utils.hench.number.int( key ) <= parent.length ) ) ) {
+	if ( utils.hench.array.fathom( parent ) && !( nested__slot({ parent, key }) ) ) {
 		return false; }
 
 	parent[ key ] = value;
@@ -134,18 +138,16 @@ export function nested_set({ needle, haystack, value }) {
 	const last = ( keys.length - 1 );
 
 	if ( ( last < 0 ) || ( ( depth < last ) && ( parent[ keys[ depth ] ] != null ) ) ) {
-		return haystack; }
+		return false; }
 
 	let branch = value;
 	for ( let i = last; i > depth; i-- ) {
 		const step = ( nested__index( keys[ i ] ) ? [] : {} );
 		if ( !( nested__assign({ parent: step, key: keys[ i ], value: branch }) ) ) {
-			return haystack; }
+			return false; }
 		branch = step; }
 
-	nested__assign({ parent, key: keys[ depth ], value: branch });
-
-	return haystack;
+	return nested__assign({ parent, key: keys[ depth ], value: branch });
 
 }
 
@@ -155,14 +157,34 @@ export function nested_remove({ needle, haystack }) {
 	const last = ( keys.length - 1 );
 
 	if ( ( last < 0 ) || ( depth < last ) ) {
-		return haystack; }
+		return false; }
 
-	if ( !( utils.hench.array.fathom( parent ) ) ) {
-		delete parent[ keys[ last ] ]; }
-	else if ( nested__index( keys[ last ] ) ) {
-		parent.splice( utils.hench.number.int( keys[ last ] ), 1 ); }
+	const key = keys[ last ];
+	const is_list = utils.hench.array.fathom( parent );
+	const found = ( is_list ? ( nested__index( key ) && ( utils.hench.number.int( key ) < parent.length ) ) : Object.hasOwn( parent, key ) );
 
-	return haystack;
+	if ( !found ) {
+		return false; }
+
+	if ( is_list ) {
+		parent.splice( utils.hench.number.int( key ), 1 ); }
+	else {
+		delete parent[ key ]; }
+
+	return true;
+
+}
+
+export function nested_insert({ needle, haystack, value }) {
+
+	const { keys, parent, depth } = nested__walk({ needle, haystack });
+	const last = ( keys.length - 1 );
+
+	if ( ( last < 0 ) || ( depth < last ) || !( utils.hench.array.fathom( parent ) ) || !( nested__slot({ parent, key: keys[ last ] }) ) ) {
+		return false; }
+
+	parent.splice( utils.hench.number.int( keys[ last ] ), 0, value );
+	return true;
 
 }
 
@@ -240,6 +262,113 @@ export function from_json( input ) {
 
 export function are_equal( a, b ) {
 	return ( to_json( a ) === to_json( b ) ); }
+
+
+function diff__sorted_json( input ) {
+	const sorted = ( name, value ) => ( fathom( value ) ? Object.fromEntries( Object.keys( value ).sort().map(( key ) => [ key, value[ key ] ]) ) : value );
+	return utils.hench.string.valid( JSON.stringify( input, sorted ) );
+}
+
+function diff__object({ before_path, after_path, before, after, output }) {
+
+	for ( const key of Object.keys( before ) ) {
+		if ( Object.hasOwn( after, key ) ) {
+			diff__walk({ before_path: [ ...before_path, key ], after_path: [ ...after_path, key ], before: before[ key ], after: after[ key ], output }); }
+		else {
+			output.push({ path: [ ...before_path, key ], deed: 'removed', before: before[ key ], after: null }); } }
+
+	for ( const key of Object.keys( after ) ) {
+		if ( !( Object.hasOwn( before, key ) ) ) {
+			output.push({ path: [ ...after_path, key ], deed: 'added', before: null, after: after[ key ] }); } }
+
+}
+
+const diff__cells = 1_000_000;
+
+function diff__list({ before_path, after_path, before, after, output }) {
+
+	const before_json = before.map(( item ) => diff__sorted_json( item ));
+	const after_json = after.map(( item ) => diff__sorted_json( item ));
+
+	let head = 0;
+	while ( ( head < before.length ) && ( head < after.length ) && ( before_json[ head ] === after_json[ head ] ) ) {
+		head++; }
+
+	let tail = 0;
+	while ( ( ( head + tail ) < before.length ) && ( ( head + tail ) < after.length ) && ( before_json[ before.length - 1 - tail ] === after_json[ after.length - 1 - tail ] ) ) {
+		tail++; }
+
+	const rows = ( before.length - head - tail );
+	const cols = ( after.length - head - tail );
+
+	if ( ( rows * cols ) > diff__cells ) {
+		output.push({ path: after_path, deed: 'changed', before, after });
+		return; }
+
+	const width = ( cols + 1 );
+	const lengths = new Uint32Array( ( rows + 1 ) * width );
+	for ( let row = ( rows - 1 ); row >= 0; row-- ) {
+		for ( let col = ( cols - 1 ); col >= 0; col-- ) {
+			const cell = ( ( row * width ) + col );
+			lengths[ cell ] = ( ( before_json[ head + row ] === after_json[ head + col ] ) ? ( lengths[ cell + width + 1 ] + 1 ) : Math.max( lengths[ cell + width ], lengths[ cell + 1 ] ) ); } }
+
+	let gap_before = [];
+	let gap_after = [];
+
+	const flush = () => {
+		const pairs = Math.min( gap_before.length, gap_after.length );
+		for ( let n = 0; n < pairs; n++ ) {
+			diff__walk({ before_path: [ ...before_path, gap_before[ n ] ], after_path: [ ...after_path, gap_after[ n ] ], before: before[ gap_before[ n ] ], after: after[ gap_after[ n ] ], output }); }
+		for ( const index of gap_before.slice( pairs ) ) {
+			output.push({ path: [ ...before_path, index ], deed: 'removed', before: before[ index ], after: null }); }
+		for ( const index of gap_after.slice( pairs ) ) {
+			output.push({ path: [ ...after_path, index ], deed: 'added', before: null, after: after[ index ] }); }
+		gap_before = [];
+		gap_after = [];
+	};
+
+	let row = 0;
+	let col = 0;
+	while ( ( row < rows ) || ( col < cols ) ) {
+		const cell = ( ( row * width ) + col );
+		if ( ( row < rows ) && ( col < cols ) && ( before_json[ head + row ] === after_json[ head + col ] ) ) {
+			flush();
+			row++;
+			col++; }
+		else if ( ( col === cols ) || ( ( row < rows ) && ( lengths[ cell + width ] >= lengths[ cell + 1 ] ) ) ) {
+			gap_before.push( head + row );
+			row++; }
+		else {
+			gap_after.push( head + col );
+			col++; } }
+
+	flush();
+
+}
+
+function diff__walk({ before_path, after_path, before, after, output }) {
+
+	if ( fathom( before ) && fathom( after ) ) {
+		diff__object({ before_path, after_path, before, after, output }); }
+	else if ( utils.hench.array.fathom( before ) && utils.hench.array.fathom( after ) ) {
+		diff__list({ before_path, after_path, before, after, output }); }
+	else if ( diff__sorted_json( before ) !== diff__sorted_json( after ) ) {
+		output.push({ path: after_path, deed: 'changed', before, after }); }
+
+}
+
+export function diff({ before, after }) {
+
+	let output = [];
+
+	try {
+		if ( JSON.stringify( before ) !== JSON.stringify( after ) ) {
+			diff__walk({ before_path: [], after_path: [], before, after, output }); } }
+	catch ( err ) { output = []; }
+
+	return output;
+
+}
 
 
 export function to_array( input ) {

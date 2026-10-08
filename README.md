@@ -405,7 +405,7 @@ object.nested({ needle: 'key', haystack: 'string' })  // → null
 
 #### `object.nested_set({ needle, haystack, value })`
 
-Writes `value` at a path. `needle` works as in `object.nested()`; numeric keys address list items. Changes `haystack` in place and returns it.
+Writes `value` at a path. `needle` works as in `object.nested()`; numeric keys address list items. Changes `haystack` in place and returns `true` when it wrote, `false` when it didn't.
 
 Missing or `null` steps are created — a list when the next key is a list index, otherwise an object. Nothing is written when a plain value is in the way, when a list index is past the end (writing at `length` appends), when the path contains `__proto__`, or when a key isn't a string or number. Throws on frozen data.
 
@@ -413,35 +413,56 @@ Missing or `null` steps are created — a list when the next key is a list index
 const data = { user: { tags: [] } };
 
 object.nested_set({ needle: 'user.name', haystack: data, value: 'Zeus' })
-// → { user: { tags: [], name: 'Zeus' } }
+// → true; { user: { tags: [], name: 'Zeus' } }
 
 object.nested_set({ needle: 'user.tags.0', haystack: data, value: 'admin' })
-// → { user: { tags: ['admin'], name: 'Zeus' } }
+// → true; { user: { tags: ['admin'], name: 'Zeus' } }
 
 object.nested_set({ needle: 'user.links.0.url', haystack: data, value: 'https://example.com' })
-// → { user: { tags: ['admin'], name: 'Zeus', links: [{ url: 'https://example.com' }] } }
+// → true; { user: { tags: ['admin'], name: 'Zeus', links: [{ url: 'https://example.com' }] } }
 
 // Nothing written:
-object.nested_set({ needle: 'user.name.first', haystack: data, value: 'Z' })  // name is a plain value
-object.nested_set({ needle: 'user.tags.5', haystack: data, value: 'x' })       // past the end of the list
-object.nested_set({ needle: '__proto__.x', haystack: data, value: 1 })         // blocked
+object.nested_set({ needle: 'user.name.first', haystack: data, value: 'Z' })  // → false; name is a plain value
+object.nested_set({ needle: 'user.tags.5', haystack: data, value: 'x' })       // → false; past the end of the list
+object.nested_set({ needle: '__proto__.x', haystack: data, value: 1 })         // → false; blocked
 ```
 
 #### `object.nested_remove({ needle, haystack })`
 
-Removes the value at a path. List items are spliced out, so later items shift down; object keys are deleted. Changes `haystack` in place and returns it. Nothing is removed when the path doesn't exist, and the same guards as `nested_set()` apply. Throws on frozen data.
+Removes the value at a path. List items are spliced out, so later items shift down; object keys are deleted. Changes `haystack` in place and returns `true` when it removed something, `false` when there was nothing at the path. The same guards as `nested_set()` apply. Throws on frozen data.
 
 ```js
 const data = { user: { name: 'Zeus', tags: ['admin', 'editor', 'viewer'] } };
 
 object.nested_remove({ needle: 'user.tags.1', haystack: data })
-// → { user: { name: 'Zeus', tags: ['admin', 'viewer'] } }
+// → true; { user: { name: 'Zeus', tags: ['admin', 'viewer'] } }
 
 object.nested_remove({ needle: 'user.name', haystack: data })
-// → { user: { tags: ['admin', 'viewer'] } }
+// → true; { user: { tags: ['admin', 'viewer'] } }
 
 object.nested_remove({ needle: 'user.missing.path', haystack: data })
-// → unchanged
+// → false; unchanged
+```
+
+#### `object.nested_insert({ needle, haystack, value })`
+
+Puts `value` into a list at the index the needle ends with; that item and the ones after it move along by one. An index equal to the list's length appends. Changes `haystack` in place and returns `true` when it wrote, `false` when it didn't.
+
+Nothing is written when the last key isn't a list index, when the value at the parent path isn't a list (missing steps are not created), or when the index is past the end. The same guards as `nested_set()` apply. Throws on frozen data.
+
+```js
+const data = { elements: ['a', 'b', 'c'] };
+
+object.nested_insert({ needle: 'elements.1', haystack: data, value: 'x' })
+// → true; { elements: ['a', 'x', 'b', 'c'] }
+
+object.nested_insert({ needle: 'elements.4', haystack: data, value: 'y' })
+// → true; { elements: ['a', 'x', 'b', 'c', 'y'] }
+
+// Nothing written:
+object.nested_insert({ needle: 'elements.9', haystack: data, value: 'z' })      // → false; past the end of the list
+object.nested_insert({ needle: 'elements.first', haystack: data, value: 'z' })  // → false; not a list index
+object.nested_insert({ needle: 'missing.0', haystack: data, value: 'z' })       // → false; no list at the parent path
 ```
 
 #### `object.to_json( input, indent )` / `object.from_json( input )`
@@ -462,6 +483,43 @@ Deep equality check via JSON serialisation.
 ```js
 object.are_equal( { a: 1 }, { a: 1 } )  // → true
 object.are_equal( { a: 1 }, { a: 2 } )  // → false
+```
+
+#### `object.diff({ before, after })`
+
+Lists what differs between two JSON values as `[ { path, deed, before, after } ]`, in document order. `path` is an array of keys, as `needle` accepts. `deed` is `'changed'`, `'added'` or `'removed'`; the missing side is `null`. An `added` or `changed` path indexes the `after` side, a `removed` path the `before` side. Equal values give `[]`. Never throws — values that can't be serialised (e.g. circular) give `[]`.
+
+- Objects are compared key by key and lists item by item, down to the values that differ. Key order doesn't matter.
+- Within an object, the `before` keys come first in their order (changed, then removed), followed by the keys only in `after` (added).
+- Lists are lined up the way a text comparison lines up lines: items equal on both sides, regardless of key order, anchor the alignment, so inserting one item gives one `added` entry.
+- Items left over between the same two anchors are paired in order and compared inside; the rest are `added` or `removed`.
+- An object or list added or removed whole, or a value that changes type, is one entry carrying it.
+- A list whose unmatched stretch would need more than 1,000,000 comparisons (about 1,000 × 1,000 items) is one `changed` entry carrying both lists.
+
+Entries hold references into `before` and `after`, not copies.
+
+```js
+object.diff({
+  before: { size: 12, elements: [ { kind: 'text' }, { kind: 'rect' } ] },
+  after:  { size: 9,  elements: [ { kind: 'text' }, { kind: 'path' }, { kind: 'rect' } ] },
+})
+// → [
+//   { path: [ 'size' ], deed: 'changed', before: 12, after: 9 },
+//   { path: [ 'elements', 1 ], deed: 'added', before: null, after: { kind: 'path' } },
+// ]
+
+object.diff({
+  before: { page: { size: 12, margin: 4 }, tags: [ 'a', 'b', 'c' ] },
+  after:  { page: { size: 9, bleed: 3 }, tags: [ 'a', 'c' ] },
+})
+// → [
+//   { path: [ 'page', 'size' ], deed: 'changed', before: 12, after: 9 },
+//   { path: [ 'page', 'margin' ], deed: 'removed', before: 4, after: null },
+//   { path: [ 'page', 'bleed' ], deed: 'added', before: null, after: 3 },
+//   { path: [ 'tags', 1 ], deed: 'removed', before: 'b', after: null },
+// ]
+
+object.diff({ before: { a: 1, b: 2 }, after: { b: 2, a: 1 } })  // → []
 ```
 
 #### `object.to_array( input )`
