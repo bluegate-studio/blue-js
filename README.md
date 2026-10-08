@@ -403,6 +403,47 @@ object.nested({ needle: 'key', haystack: null })      // → null
 object.nested({ needle: 'key', haystack: 'string' })  // → null
 ```
 
+#### `object.nested_set({ needle, haystack, value })`
+
+Writes `value` at a path. `needle` works as in `object.nested()`; numeric keys address list items. Changes `haystack` in place and returns it.
+
+Missing or `null` steps are created — a list when the next key is a list index, otherwise an object. Nothing is written when a plain value is in the way, when a list index is past the end (writing at `length` appends), when the path contains `__proto__`, or when a key isn't a string or number. Throws on frozen data.
+
+```js
+const data = { user: { tags: [] } };
+
+object.nested_set({ needle: 'user.name', haystack: data, value: 'Zeus' })
+// → { user: { tags: [], name: 'Zeus' } }
+
+object.nested_set({ needle: 'user.tags.0', haystack: data, value: 'admin' })
+// → { user: { tags: ['admin'], name: 'Zeus' } }
+
+object.nested_set({ needle: 'user.links.0.url', haystack: data, value: 'https://example.com' })
+// → { user: { tags: ['admin'], name: 'Zeus', links: [{ url: 'https://example.com' }] } }
+
+// Nothing written:
+object.nested_set({ needle: 'user.name.first', haystack: data, value: 'Z' })  // name is a plain value
+object.nested_set({ needle: 'user.tags.5', haystack: data, value: 'x' })       // past the end of the list
+object.nested_set({ needle: '__proto__.x', haystack: data, value: 1 })         // blocked
+```
+
+#### `object.nested_remove({ needle, haystack })`
+
+Removes the value at a path. List items are spliced out, so later items shift down; object keys are deleted. Changes `haystack` in place and returns it. Nothing is removed when the path doesn't exist, and the same guards as `nested_set()` apply. Throws on frozen data.
+
+```js
+const data = { user: { name: 'Zeus', tags: ['admin', 'editor', 'viewer'] } };
+
+object.nested_remove({ needle: 'user.tags.1', haystack: data })
+// → { user: { name: 'Zeus', tags: ['admin', 'viewer'] } }
+
+object.nested_remove({ needle: 'user.name', haystack: data })
+// → { user: { tags: ['admin', 'viewer'] } }
+
+object.nested_remove({ needle: 'user.missing.path', haystack: data })
+// → unchanged
+```
+
 #### `object.to_json( input, indent )` / `object.from_json( input )`
 
 Serialise an object to a JSON string, or parse a JSON string back to an object. Returns `''` or `{}` on failure. If the input is already the target type, it's returned as-is.

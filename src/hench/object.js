@@ -84,6 +84,88 @@ export function nested({ needle, haystack }) {
 
 }
 
+function nested__walk({ needle, haystack }) {
+
+	const is_container = ( input ) => ( utils.hench.object.fathom( input ) || utils.hench.array.fathom( input ) );
+	const is_key = ( input ) => ( utils.hench.string.fathom( input ) || utils.hench.number.fathom( input ) );
+
+	let keys = [];
+	if ( utils.hench.array.fathom( needle ) ) {
+		keys = needle; }
+	else if ( utils.hench.string.fathom( needle ) && ( needle.length > 0 ) ) {
+		keys = needle.split( '.' ); }
+
+	if ( !( keys.every( is_key ) ) || !( is_container( haystack ) ) ) {
+		keys = []; }
+
+	keys = keys.map(( key ) => `${ key }` );
+
+	if ( keys.includes( '__proto__' ) ) {
+		keys = []; }
+
+	let parent = haystack;
+	let depth = 0;
+	while ( ( depth < ( keys.length - 1 ) ) && is_container( parent[ keys[ depth ] ] ) ) {
+		parent = parent[ keys[ depth ] ];
+		depth++; }
+
+	return { keys, parent, depth };
+
+}
+
+function nested__index( key ) {
+	const index = utils.hench.number.int( key );
+	return ( ( index >= 0 ) && ( utils.hench.string.valid( index ) === key ) );
+}
+
+function nested__assign({ parent, key, value }) {
+
+	if ( utils.hench.array.fathom( parent ) && !( nested__index( key ) && ( utils.hench.number.int( key ) <= parent.length ) ) ) {
+		return false; }
+
+	parent[ key ] = value;
+	return true;
+
+}
+
+export function nested_set({ needle, haystack, value }) {
+
+	const { keys, parent, depth } = nested__walk({ needle, haystack });
+	const last = ( keys.length - 1 );
+
+	if ( ( last < 0 ) || ( ( depth < last ) && ( parent[ keys[ depth ] ] != null ) ) ) {
+		return haystack; }
+
+	let branch = value;
+	for ( let i = last; i > depth; i-- ) {
+		const step = ( nested__index( keys[ i ] ) ? [] : {} );
+		if ( !( nested__assign({ parent: step, key: keys[ i ], value: branch }) ) ) {
+			return haystack; }
+		branch = step; }
+
+	nested__assign({ parent, key: keys[ depth ], value: branch });
+
+	return haystack;
+
+}
+
+export function nested_remove({ needle, haystack }) {
+
+	const { keys, parent, depth } = nested__walk({ needle, haystack });
+	const last = ( keys.length - 1 );
+
+	if ( ( last < 0 ) || ( depth < last ) ) {
+		return haystack; }
+
+	if ( !( utils.hench.array.fathom( parent ) ) ) {
+		delete parent[ keys[ last ] ]; }
+	else if ( nested__index( keys[ last ] ) ) {
+		parent.splice( utils.hench.number.int( keys[ last ] ), 1 ); }
+
+	return haystack;
+
+}
+
 
 export function nested__human_version({of, from}) { 
 
