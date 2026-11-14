@@ -1006,6 +1006,7 @@ Each entry holds:
 | `iso` | ISO 3166-1 alpha-2 code, upper case. |
 | `name_english` | Name in English. |
 | `name_native` | Name in the country's own language; one language for multilingual countries. Same as `name_english` where English is an official language. |
+| `aliases` | Other names people search by, for search only, never for display: former names (`Turkey`), common short and long forms (`UK`, `England`, `United States of America`), and names in the country's other official languages (`Suisse`, `Svizzera`). `[]` when none. |
 | `dial` | Calling code, digits only, without `+`. Several countries share one (`1`, `7`, `44`, …). `''` for Bouvet Island and Heard Island and McDonald Islands, which have none. |
 
 ```js
@@ -1015,6 +1016,9 @@ linguist.countries()
 Object.values( linguist.countries() )
   .sort(( l, r ) => hench.compare_to_sort( l.name_english, r.name_english ))
 // → list sorted by English name
+
+hench.array.filter( Object.values( linguist.countries() ), [{ keys: [ 'name_english', 'name_native', 'aliases' ], val: 'england' }] )
+// → [ { iso: 'GB', ... } ]
 ```
 
 ### `linguist.country( iso )`
@@ -1023,9 +1027,9 @@ Returns one country by its ISO 3166-1 alpha-2 code. Ignores case and surrounding
 
 ```js
 linguist.country( 'FI' )
-// → { iso: 'FI', name_english: 'Finland', name_native: 'Suomi', dial: '358' }
+// → { iso: 'FI', name_english: 'Finland', name_native: 'Suomi', aliases: [], dial: '358' }
 
-linguist.country( ' tr ' )  // → { iso: 'TR', name_english: 'Türkiye', name_native: 'Türkiye', dial: '90' }
+linguist.country( ' tr ' )  // → { iso: 'TR', name_english: 'Türkiye', name_native: 'Türkiye', aliases: [ 'Turkey' ], dial: '90' }
 linguist.country( 'XX' )    // → {}
 ```
 
