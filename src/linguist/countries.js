@@ -2,14 +2,14 @@ export default {
     "AC": {
         "iso": "AC",
         "name_english": "Ascension Island",
-        "name_native": "Ascension Island",
+        "name_native": "",
         "aliases": [],
         "dial": "247"
     },
     "AD": {
         "iso": "AD",
         "name_english": "Andorra",
-        "name_native": "Andorra",
+        "name_native": "",
         "aliases": [],
         "dial": "376"
     },
@@ -32,14 +32,14 @@ export default {
     "AG": {
         "iso": "AG",
         "name_english": "Antigua and Barbuda",
-        "name_native": "Antigua and Barbuda",
+        "name_native": "",
         "aliases": [],
         "dial": "1"
     },
     "AI": {
         "iso": "AI",
         "name_english": "Anguilla",
-        "name_native": "Anguilla",
+        "name_native": "",
         "aliases": [],
         "dial": "1"
     },
@@ -60,28 +60,28 @@ export default {
     "AO": {
         "iso": "AO",
         "name_english": "Angola",
-        "name_native": "Angola",
+        "name_native": "",
         "aliases": [],
         "dial": "244"
     },
     "AQ": {
         "iso": "AQ",
         "name_english": "Antarctica",
-        "name_native": "Antarctica",
+        "name_native": "",
         "aliases": [],
         "dial": "672"
     },
     "AR": {
         "iso": "AR",
         "name_english": "Argentina",
-        "name_native": "Argentina",
+        "name_native": "",
         "aliases": [],
         "dial": "54"
     },
     "AS": {
         "iso": "AS",
         "name_english": "American Samoa",
-        "name_native": "American Samoa",
+        "name_native": "",
         "aliases": [
             "Amerika Sāmoa"
         ],
@@ -97,14 +97,14 @@ export default {
     "AU": {
         "iso": "AU",
         "name_english": "Australia",
-        "name_native": "Australia",
+        "name_native": "",
         "aliases": [],
         "dial": "61"
     },
     "AW": {
         "iso": "AW",
         "name_english": "Aruba",
-        "name_native": "Aruba",
+        "name_native": "",
         "aliases": [],
         "dial": "297"
     },
@@ -134,7 +134,7 @@ export default {
     "BB": {
         "iso": "BB",
         "name_english": "Barbados",
-        "name_native": "Barbados",
+        "name_native": "",
         "aliases": [],
         "dial": "1"
     },
@@ -158,7 +158,7 @@ export default {
     "BF": {
         "iso": "BF",
         "name_english": "Burkina Faso",
-        "name_native": "Burkina Faso",
+        "name_native": "",
         "aliases": [],
         "dial": "226"
     },
@@ -193,7 +193,7 @@ export default {
     "BL": {
         "iso": "BL",
         "name_english": "Saint Barthélemy",
-        "name_native": "Saint Barthélemy",
+        "name_native": "",
         "aliases": [
             "St. Barts",
             "St. Barths",
@@ -204,14 +204,14 @@ export default {
     "BM": {
         "iso": "BM",
         "name_english": "Bermuda",
-        "name_native": "Bermuda",
+        "name_native": "",
         "aliases": [],
         "dial": "1"
     },
     "BN": {
         "iso": "BN",
         "name_english": "Brunei",
-        "name_native": "Brunei",
+        "name_native": "",
         "aliases": [
             "Brunei Darussalam",
             "بروني"
@@ -221,7 +221,7 @@ export default {
     "BO": {
         "iso": "BO",
         "name_english": "Bolivia",
-        "name_native": "Bolivia",
+        "name_native": "",
         "aliases": [
             "Wuliwya",
             "Puliwya",
@@ -250,7 +250,7 @@ export default {
     "BS": {
         "iso": "BS",
         "name_english": "Bahamas",
-        "name_native": "Bahamas",
+        "name_native": "",
         "aliases": [
             "The Bahamas"
         ],
@@ -273,7 +273,7 @@ export default {
     "BW": {
         "iso": "BW",
         "name_english": "Botswana",
-        "name_native": "Botswana",
+        "name_native": "",
         "aliases": [],
         "dial": "267"
     },
@@ -287,21 +287,21 @@ export default {
     "BZ": {
         "iso": "BZ",
         "name_english": "Belize",
-        "name_native": "Belize",
+        "name_native": "",
         "aliases": [],
         "dial": "501"
     },
     "CA": {
         "iso": "CA",
         "name_english": "Canada",
-        "name_native": "Canada",
+        "name_native": "",
         "aliases": [],
         "dial": "1"
     },
     "CC": {
         "iso": "CC",
         "name_english": "Cocos (Keeling) Islands",
-        "name_native": "Cocos (Keeling) Islands",
+        "name_native": "",
         "aliases": [],
         "dial": "61"
     },
@@ -348,7 +348,7 @@ export default {
     "CI": {
         "iso": "CI",
         "name_english": "Côte d'Ivoire",
-        "name_native": "Côte d'Ivoire",
+        "name_native": "",
         "aliases": [
             "Ivory Coast"
         ],
@@ -357,14 +357,14 @@ export default {
     "CK": {
         "iso": "CK",
         "name_english": "Cook Islands",
-        "name_native": "Cook Islands",
+        "name_native": "",
         "aliases": [],
         "dial": "682"
     },
     "CL": {
         "iso": "CL",
         "name_english": "Chile",
-        "name_native": "Chile",
+        "name_native": "",
         "aliases": [],
         "dial": "56"
     },
@@ -385,28 +385,28 @@ export default {
     "CO": {
         "iso": "CO",
         "name_english": "Colombia",
-        "name_native": "Colombia",
+        "name_native": "",
         "aliases": [],
         "dial": "57"
     },
     "CR": {
         "iso": "CR",
         "name_english": "Costa Rica",
-        "name_native": "Costa Rica",
+        "name_native": "",
         "aliases": [],
         "dial": "506"
     },
     "CU": {
         "iso": "CU",
         "name_english": "Cuba",
-        "name_native": "Cuba",
+        "name_native": "",
         "aliases": [],
         "dial": "53"
     },
     "CV": {
         "iso": "CV",
         "name_english": "Cabo Verde",
-        "name_native": "Cabo Verde",
+        "name_native": "",
         "aliases": [
             "Cape Verde"
         ],
@@ -415,7 +415,7 @@ export default {
     "CW": {
         "iso": "CW",
         "name_english": "Curaçao",
-        "name_native": "Curaçao",
+        "name_native": "",
         "aliases": [
             "Kòrsou"
         ],
@@ -424,7 +424,7 @@ export default {
     "CX": {
         "iso": "CX",
         "name_english": "Christmas Island",
-        "name_native": "Christmas Island",
+        "name_native": "",
         "aliases": [],
         "dial": "61"
     },
@@ -456,7 +456,7 @@ export default {
     "DJ": {
         "iso": "DJ",
         "name_english": "Djibouti",
-        "name_native": "Djibouti",
+        "name_native": "",
         "aliases": [
             "جيبوتي"
         ],
@@ -472,7 +472,7 @@ export default {
     "DM": {
         "iso": "DM",
         "name_english": "Dominica",
-        "name_native": "Dominica",
+        "name_native": "",
         "aliases": [],
         "dial": "1"
     },
@@ -495,7 +495,7 @@ export default {
     "EC": {
         "iso": "EC",
         "name_english": "Ecuador",
-        "name_native": "Ecuador",
+        "name_native": "",
         "aliases": [],
         "dial": "593"
     },
@@ -553,7 +553,7 @@ export default {
     "FJ": {
         "iso": "FJ",
         "name_english": "Fiji",
-        "name_native": "Fiji",
+        "name_native": "",
         "aliases": [
             "Matanitu Tugalala o Viti"
         ],
@@ -562,7 +562,7 @@ export default {
     "FK": {
         "iso": "FK",
         "name_english": "Falkland Islands",
-        "name_native": "Falkland Islands",
+        "name_native": "",
         "aliases": [
             "Malvinas"
         ],
@@ -571,7 +571,7 @@ export default {
     "FM": {
         "iso": "FM",
         "name_english": "Micronesia",
-        "name_native": "Micronesia",
+        "name_native": "",
         "aliases": [
             "Federated States of Micronesia"
         ],
@@ -587,21 +587,21 @@ export default {
     "FR": {
         "iso": "FR",
         "name_english": "France",
-        "name_native": "France",
+        "name_native": "",
         "aliases": [],
         "dial": "33"
     },
     "GA": {
         "iso": "GA",
         "name_english": "Gabon",
-        "name_native": "Gabon",
+        "name_native": "",
         "aliases": [],
         "dial": "241"
     },
     "GB": {
         "iso": "GB",
         "name_english": "United Kingdom",
-        "name_native": "United Kingdom",
+        "name_native": "",
         "aliases": [
             "UK",
             "Great Britain",
@@ -615,7 +615,7 @@ export default {
     "GD": {
         "iso": "GD",
         "name_english": "Grenada",
-        "name_native": "Grenada",
+        "name_native": "",
         "aliases": [],
         "dial": "1"
     },
@@ -636,7 +636,7 @@ export default {
     "GG": {
         "iso": "GG",
         "name_english": "Guernsey",
-        "name_native": "Guernsey",
+        "name_native": "",
         "aliases": [
             "Channel Islands"
         ],
@@ -645,14 +645,14 @@ export default {
     "GH": {
         "iso": "GH",
         "name_english": "Ghana",
-        "name_native": "Ghana",
+        "name_native": "",
         "aliases": [],
         "dial": "233"
     },
     "GI": {
         "iso": "GI",
         "name_english": "Gibraltar",
-        "name_native": "Gibraltar",
+        "name_native": "",
         "aliases": [],
         "dial": "350"
     },
@@ -666,7 +666,7 @@ export default {
     "GM": {
         "iso": "GM",
         "name_english": "Gambia",
-        "name_native": "Gambia",
+        "name_native": "",
         "aliases": [
             "The Gambia"
         ],
@@ -682,7 +682,7 @@ export default {
     "GP": {
         "iso": "GP",
         "name_english": "Guadeloupe",
-        "name_native": "Guadeloupe",
+        "name_native": "",
         "aliases": [],
         "dial": "590"
     },
@@ -705,21 +705,21 @@ export default {
     "GS": {
         "iso": "GS",
         "name_english": "South Georgia and the South Sandwich Islands",
-        "name_native": "South Georgia and the South Sandwich Islands",
+        "name_native": "",
         "aliases": [],
         "dial": "500"
     },
     "GT": {
         "iso": "GT",
         "name_english": "Guatemala",
-        "name_native": "Guatemala",
+        "name_native": "",
         "aliases": [],
         "dial": "502"
     },
     "GU": {
         "iso": "GU",
         "name_english": "Guam",
-        "name_native": "Guam",
+        "name_native": "",
         "aliases": [
             "Guåhan"
         ],
@@ -735,7 +735,7 @@ export default {
     "GY": {
         "iso": "GY",
         "name_english": "Guyana",
-        "name_native": "Guyana",
+        "name_native": "",
         "aliases": [],
         "dial": "592"
     },
@@ -749,14 +749,14 @@ export default {
     "HM": {
         "iso": "HM",
         "name_english": "Heard Island and McDonald Islands",
-        "name_native": "Heard Island and McDonald Islands",
+        "name_native": "",
         "aliases": [],
         "dial": ""
     },
     "HN": {
         "iso": "HN",
         "name_english": "Honduras",
-        "name_native": "Honduras",
+        "name_native": "",
         "aliases": [],
         "dial": "504"
     },
@@ -786,14 +786,14 @@ export default {
     "ID": {
         "iso": "ID",
         "name_english": "Indonesia",
-        "name_native": "Indonesia",
+        "name_native": "",
         "aliases": [],
         "dial": "62"
     },
     "IE": {
         "iso": "IE",
         "name_english": "Ireland",
-        "name_native": "Ireland",
+        "name_native": "",
         "aliases": [
             "Republic of Ireland",
             "Éire"
@@ -812,7 +812,7 @@ export default {
     "IM": {
         "iso": "IM",
         "name_english": "Isle of Man",
-        "name_native": "Isle of Man",
+        "name_native": "",
         "aliases": [
             "Ellan Vannin"
         ],
@@ -830,7 +830,7 @@ export default {
     "IO": {
         "iso": "IO",
         "name_english": "British Indian Ocean Territory",
-        "name_native": "British Indian Ocean Territory",
+        "name_native": "",
         "aliases": [
             "Chagos Islands"
         ],
@@ -867,7 +867,7 @@ export default {
     "JE": {
         "iso": "JE",
         "name_english": "Jersey",
-        "name_native": "Jersey",
+        "name_native": "",
         "aliases": [
             "Channel Islands"
         ],
@@ -876,7 +876,7 @@ export default {
     "JM": {
         "iso": "JM",
         "name_english": "Jamaica",
-        "name_native": "Jamaica",
+        "name_native": "",
         "aliases": [],
         "dial": "1"
     },
@@ -897,7 +897,7 @@ export default {
     "KE": {
         "iso": "KE",
         "name_english": "Kenya",
-        "name_native": "Kenya",
+        "name_native": "",
         "aliases": [],
         "dial": "254"
     },
@@ -920,7 +920,7 @@ export default {
     "KI": {
         "iso": "KI",
         "name_english": "Kiribati",
-        "name_native": "Kiribati",
+        "name_native": "",
         "aliases": [],
         "dial": "686"
     },
@@ -937,7 +937,7 @@ export default {
     "KN": {
         "iso": "KN",
         "name_english": "Saint Kitts and Nevis",
-        "name_native": "Saint Kitts and Nevis",
+        "name_native": "",
         "aliases": [
             "St. Kitts and Nevis"
         ],
@@ -972,7 +972,7 @@ export default {
     "KY": {
         "iso": "KY",
         "name_english": "Cayman Islands",
-        "name_native": "Cayman Islands",
+        "name_native": "",
         "aliases": [],
         "dial": "1"
     },
@@ -1002,7 +1002,7 @@ export default {
     "LC": {
         "iso": "LC",
         "name_english": "Saint Lucia",
-        "name_native": "Saint Lucia",
+        "name_native": "",
         "aliases": [
             "St. Lucia"
         ],
@@ -1011,7 +1011,7 @@ export default {
     "LI": {
         "iso": "LI",
         "name_english": "Liechtenstein",
-        "name_native": "Liechtenstein",
+        "name_native": "",
         "aliases": [
             "Liächteschtäi"
         ],
@@ -1029,14 +1029,14 @@ export default {
     "LR": {
         "iso": "LR",
         "name_english": "Liberia",
-        "name_native": "Liberia",
+        "name_native": "",
         "aliases": [],
         "dial": "231"
     },
     "LS": {
         "iso": "LS",
         "name_english": "Lesotho",
-        "name_native": "Lesotho",
+        "name_native": "",
         "aliases": [],
         "dial": "266"
     },
@@ -1083,7 +1083,7 @@ export default {
     "MC": {
         "iso": "MC",
         "name_english": "Monaco",
-        "name_native": "Monaco",
+        "name_native": "",
         "aliases": [],
         "dial": "377"
     },
@@ -1120,7 +1120,7 @@ export default {
     "MH": {
         "iso": "MH",
         "name_english": "Marshall Islands",
-        "name_native": "Marshall Islands",
+        "name_native": "",
         "aliases": [
             "Aolepān Aorōkin M̧ajeļ"
         ],
@@ -1138,7 +1138,7 @@ export default {
     "ML": {
         "iso": "ML",
         "name_english": "Mali",
-        "name_native": "Mali",
+        "name_native": "",
         "aliases": [],
         "dial": "223"
     },
@@ -1168,14 +1168,14 @@ export default {
     "MP": {
         "iso": "MP",
         "name_english": "Northern Mariana Islands",
-        "name_native": "Northern Mariana Islands",
+        "name_native": "",
         "aliases": [],
         "dial": "1"
     },
     "MQ": {
         "iso": "MQ",
         "name_english": "Martinique",
-        "name_native": "Martinique",
+        "name_native": "",
         "aliases": [],
         "dial": "596"
     },
@@ -1189,21 +1189,21 @@ export default {
     "MS": {
         "iso": "MS",
         "name_english": "Montserrat",
-        "name_native": "Montserrat",
+        "name_native": "",
         "aliases": [],
         "dial": "1"
     },
     "MT": {
         "iso": "MT",
         "name_english": "Malta",
-        "name_native": "Malta",
+        "name_native": "",
         "aliases": [],
         "dial": "356"
     },
     "MU": {
         "iso": "MU",
         "name_english": "Mauritius",
-        "name_native": "Mauritius",
+        "name_native": "",
         "aliases": [
             "Maurice"
         ],
@@ -1219,7 +1219,7 @@ export default {
     "MW": {
         "iso": "MW",
         "name_english": "Malawi",
-        "name_native": "Malawi",
+        "name_native": "",
         "aliases": [],
         "dial": "265"
     },
@@ -1233,7 +1233,7 @@ export default {
     "MY": {
         "iso": "MY",
         "name_english": "Malaysia",
-        "name_native": "Malaysia",
+        "name_native": "",
         "aliases": [],
         "dial": "60"
     },
@@ -1247,7 +1247,7 @@ export default {
     "NA": {
         "iso": "NA",
         "name_english": "Namibia",
-        "name_native": "Namibia",
+        "name_native": "",
         "aliases": [],
         "dial": "264"
     },
@@ -1268,14 +1268,14 @@ export default {
     "NF": {
         "iso": "NF",
         "name_english": "Norfolk Island",
-        "name_native": "Norfolk Island",
+        "name_native": "",
         "aliases": [],
         "dial": "672"
     },
     "NG": {
         "iso": "NG",
         "name_english": "Nigeria",
-        "name_native": "Nigeria",
+        "name_native": "",
         "aliases": [
             "Nàìjíríà"
         ],
@@ -1284,7 +1284,7 @@ export default {
     "NI": {
         "iso": "NI",
         "name_english": "Nicaragua",
-        "name_native": "Nicaragua",
+        "name_native": "",
         "aliases": [],
         "dial": "505"
     },
@@ -1316,7 +1316,7 @@ export default {
     "NR": {
         "iso": "NR",
         "name_english": "Nauru",
-        "name_native": "Nauru",
+        "name_native": "",
         "aliases": [
             "Naoero"
         ],
@@ -1325,14 +1325,14 @@ export default {
     "NU": {
         "iso": "NU",
         "name_english": "Niue",
-        "name_native": "Niue",
+        "name_native": "",
         "aliases": [],
         "dial": "683"
     },
     "NZ": {
         "iso": "NZ",
         "name_english": "New Zealand",
-        "name_native": "New Zealand",
+        "name_native": "",
         "aliases": [
             "Aotearoa"
         ],
@@ -1372,7 +1372,7 @@ export default {
     "PG": {
         "iso": "PG",
         "name_english": "Papua New Guinea",
-        "name_native": "Papua New Guinea",
+        "name_native": "",
         "aliases": [
             "Papua Niugini",
             "Gau Hedinarai ai Papua–Matamata Guinea"
@@ -1382,7 +1382,7 @@ export default {
     "PH": {
         "iso": "PH",
         "name_english": "Philippines",
-        "name_native": "Philippines",
+        "name_native": "",
         "aliases": [
             "Pilipinas"
         ],
@@ -1414,14 +1414,14 @@ export default {
     "PN": {
         "iso": "PN",
         "name_english": "Pitcairn Islands",
-        "name_native": "Pitcairn Islands",
+        "name_native": "",
         "aliases": [],
         "dial": "64"
     },
     "PR": {
         "iso": "PR",
         "name_english": "Puerto Rico",
-        "name_native": "Puerto Rico",
+        "name_native": "",
         "aliases": [],
         "dial": "1"
     },
@@ -1438,14 +1438,14 @@ export default {
     "PT": {
         "iso": "PT",
         "name_english": "Portugal",
-        "name_native": "Portugal",
+        "name_native": "",
         "aliases": [],
         "dial": "351"
     },
     "PW": {
         "iso": "PW",
         "name_english": "Palau",
-        "name_native": "Palau",
+        "name_native": "",
         "aliases": [
             "Belau"
         ],
@@ -1454,7 +1454,7 @@ export default {
     "PY": {
         "iso": "PY",
         "name_english": "Paraguay",
-        "name_native": "Paraguay",
+        "name_native": "",
         "aliases": [
             "Paraguái"
         ],
@@ -1502,7 +1502,7 @@ export default {
     "RW": {
         "iso": "RW",
         "name_english": "Rwanda",
-        "name_native": "Rwanda",
+        "name_native": "",
         "aliases": [
             "U Rwanda"
         ],
@@ -1518,14 +1518,14 @@ export default {
     "SB": {
         "iso": "SB",
         "name_english": "Solomon Islands",
-        "name_native": "Solomon Islands",
+        "name_native": "",
         "aliases": [],
         "dial": "677"
     },
     "SC": {
         "iso": "SC",
         "name_english": "Seychelles",
-        "name_native": "Seychelles",
+        "name_native": "",
         "aliases": [],
         "dial": "248"
     },
@@ -1546,7 +1546,7 @@ export default {
     "SG": {
         "iso": "SG",
         "name_english": "Singapore",
-        "name_native": "Singapore",
+        "name_native": "",
         "aliases": [
             "Singapura",
             "சிங்கப்பூர்",
@@ -1557,7 +1557,7 @@ export default {
     "SH": {
         "iso": "SH",
         "name_english": "Saint Helena",
-        "name_native": "Saint Helena",
+        "name_native": "",
         "aliases": [
             "St. Helena"
         ],
@@ -1587,14 +1587,14 @@ export default {
     "SL": {
         "iso": "SL",
         "name_english": "Sierra Leone",
-        "name_native": "Sierra Leone",
+        "name_native": "",
         "aliases": [],
         "dial": "232"
     },
     "SM": {
         "iso": "SM",
         "name_english": "San Marino",
-        "name_native": "San Marino",
+        "name_native": "",
         "aliases": [],
         "dial": "378"
     },
@@ -1619,14 +1619,14 @@ export default {
     "SR": {
         "iso": "SR",
         "name_english": "Suriname",
-        "name_native": "Suriname",
+        "name_native": "",
         "aliases": [],
         "dial": "597"
     },
     "SS": {
         "iso": "SS",
         "name_english": "South Sudan",
-        "name_native": "South Sudan",
+        "name_native": "",
         "aliases": [],
         "dial": "211"
     },
@@ -1640,14 +1640,14 @@ export default {
     "SV": {
         "iso": "SV",
         "name_english": "El Salvador",
-        "name_native": "El Salvador",
+        "name_native": "",
         "aliases": [],
         "dial": "503"
     },
     "SX": {
         "iso": "SX",
         "name_english": "Sint Maarten",
-        "name_native": "Sint Maarten",
+        "name_native": "",
         "aliases": [
             "St. Maarten",
             "Sint-Maarten"
@@ -1664,7 +1664,7 @@ export default {
     "SZ": {
         "iso": "SZ",
         "name_english": "Eswatini",
-        "name_native": "Eswatini",
+        "name_native": "",
         "aliases": [
             "Swaziland"
         ],
@@ -1673,14 +1673,14 @@ export default {
     "TA": {
         "iso": "TA",
         "name_english": "Tristan da Cunha",
-        "name_native": "Tristan da Cunha",
+        "name_native": "",
         "aliases": [],
         "dial": "290"
     },
     "TC": {
         "iso": "TC",
         "name_english": "Turks and Caicos Islands",
-        "name_native": "Turks and Caicos Islands",
+        "name_native": "",
         "aliases": [],
         "dial": "1"
     },
@@ -1705,7 +1705,7 @@ export default {
     "TG": {
         "iso": "TG",
         "name_english": "Togo",
-        "name_native": "Togo",
+        "name_native": "",
         "aliases": [],
         "dial": "228"
     },
@@ -1726,14 +1726,14 @@ export default {
     "TK": {
         "iso": "TK",
         "name_english": "Tokelau",
-        "name_native": "Tokelau",
+        "name_native": "",
         "aliases": [],
         "dial": "690"
     },
     "TL": {
         "iso": "TL",
         "name_english": "Timor-Leste",
-        "name_native": "Timor-Leste",
+        "name_native": "",
         "aliases": [
             "East Timor",
             "Timór Lorosa'e"
@@ -1759,14 +1759,14 @@ export default {
     "TO": {
         "iso": "TO",
         "name_english": "Tonga",
-        "name_native": "Tonga",
+        "name_native": "",
         "aliases": [],
         "dial": "676"
     },
     "TR": {
         "iso": "TR",
         "name_english": "Türkiye",
-        "name_native": "Türkiye",
+        "name_native": "",
         "aliases": [
             "Turkey"
         ],
@@ -1775,14 +1775,14 @@ export default {
     "TT": {
         "iso": "TT",
         "name_english": "Trinidad and Tobago",
-        "name_native": "Trinidad and Tobago",
+        "name_native": "",
         "aliases": [],
         "dial": "1"
     },
     "TV": {
         "iso": "TV",
         "name_english": "Tuvalu",
-        "name_native": "Tuvalu",
+        "name_native": "",
         "aliases": [],
         "dial": "688"
     },
@@ -1798,7 +1798,7 @@ export default {
     "TZ": {
         "iso": "TZ",
         "name_english": "Tanzania",
-        "name_native": "Tanzania",
+        "name_native": "",
         "aliases": [],
         "dial": "255"
     },
@@ -1812,14 +1812,14 @@ export default {
     "UG": {
         "iso": "UG",
         "name_english": "Uganda",
-        "name_native": "Uganda",
+        "name_native": "",
         "aliases": [],
         "dial": "256"
     },
     "UM": {
         "iso": "UM",
         "name_english": "U.S. Outlying Islands",
-        "name_native": "U.S. Outlying Islands",
+        "name_native": "",
         "aliases": [
             "US Outlying Islands",
             "United States Minor Outlying Islands"
@@ -1829,7 +1829,7 @@ export default {
     "US": {
         "iso": "US",
         "name_english": "USA",
-        "name_native": "USA",
+        "name_native": "United States of America",
         "aliases": [
             "United States of America"
         ],
@@ -1838,7 +1838,7 @@ export default {
     "UY": {
         "iso": "UY",
         "name_english": "Uruguay",
-        "name_native": "Uruguay",
+        "name_native": "",
         "aliases": [],
         "dial": "598"
     },
@@ -1863,7 +1863,7 @@ export default {
     "VC": {
         "iso": "VC",
         "name_english": "Saint Vincent and the Grenadines",
-        "name_native": "Saint Vincent and the Grenadines",
+        "name_native": "",
         "aliases": [
             "St. Vincent and the Grenadines"
         ],
@@ -1872,14 +1872,14 @@ export default {
     "VE": {
         "iso": "VE",
         "name_english": "Venezuela",
-        "name_native": "Venezuela",
+        "name_native": "",
         "aliases": [],
         "dial": "58"
     },
     "VG": {
         "iso": "VG",
         "name_english": "British Virgin Islands",
-        "name_native": "British Virgin Islands",
+        "name_native": "",
         "aliases": [
             "BVI"
         ],
@@ -1888,7 +1888,7 @@ export default {
     "VI": {
         "iso": "VI",
         "name_english": "U.S. Virgin Islands",
-        "name_native": "U.S. Virgin Islands",
+        "name_native": "",
         "aliases": [
             "US Virgin Islands",
             "United States Virgin Islands"
@@ -1905,7 +1905,7 @@ export default {
     "VU": {
         "iso": "VU",
         "name_english": "Vanuatu",
-        "name_native": "Vanuatu",
+        "name_native": "",
         "aliases": [],
         "dial": "678"
     },
@@ -1919,7 +1919,7 @@ export default {
     "WS": {
         "iso": "WS",
         "name_english": "Samoa",
-        "name_native": "Samoa",
+        "name_native": "",
         "aliases": [],
         "dial": "685"
     },
@@ -1942,14 +1942,14 @@ export default {
     "YT": {
         "iso": "YT",
         "name_english": "Mayotte",
-        "name_native": "Mayotte",
+        "name_native": "",
         "aliases": [],
         "dial": "262"
     },
     "ZA": {
         "iso": "ZA",
         "name_english": "Republic of South Africa",
-        "name_native": "Republic of South Africa",
+        "name_native": "",
         "aliases": [
             "Isewula Afrika",
             "Afrika-Dzonga",
@@ -1965,14 +1965,14 @@ export default {
     "ZM": {
         "iso": "ZM",
         "name_english": "Zambia",
-        "name_native": "Zambia",
+        "name_native": "",
         "aliases": [],
         "dial": "260"
     },
     "ZW": {
         "iso": "ZW",
         "name_english": "Zimbabwe",
-        "name_native": "Zimbabwe",
+        "name_native": "",
         "aliases": [],
         "dial": "263"
     }
