@@ -995,6 +995,40 @@ linguist.current_locale( 'en' )  // → 'en' (if available)
 linguist.current_locale()        // → detected from browser/system
 ```
 
+### `linguist.countries()`
+
+Returns every country as an object keyed by its ISO 3166-1 alpha-2 code. 252 entries: all 249 ISO countries and territories, plus Ascension Island (`AC`), Tristan da Cunha (`TA`) and Kosovo (`XK`). Each call returns a fresh copy, so changing it affects nothing else.
+
+Each entry holds:
+
+| Key | Value |
+|-----|-------|
+| `iso` | ISO 3166-1 alpha-2 code, upper case. |
+| `name_english` | Name in English. |
+| `name_native` | Name in the country's own language; one language for multilingual countries. Same as `name_english` where English is an official language. |
+| `dial` | Calling code, digits only, without `+`. Several countries share one (`1`, `7`, `44`, …). `''` for Bouvet Island and Heard Island and McDonald Islands, which have none. |
+
+```js
+linguist.countries()
+// → { AC: { iso: 'AC', ... }, AD: { iso: 'AD', ... }, ..., ZW: { iso: 'ZW', ... } }
+
+Object.values( linguist.countries() )
+  .sort(( l, r ) => hench.compare_to_sort( l.name_english, r.name_english ))
+// → list sorted by English name
+```
+
+### `linguist.country( iso )`
+
+Returns one country by its ISO 3166-1 alpha-2 code. Ignores case and surrounding spaces. Returns a fresh copy, or `{}` if the code is unknown.
+
+```js
+linguist.country( 'FI' )
+// → { iso: 'FI', name_english: 'Finland', name_native: 'Suomi', dial: '358' }
+
+linguist.country( ' tr ' )  // → { iso: 'TR', name_english: 'Türkiye', name_native: 'Türkiye', dial: '90' }
+linguist.country( 'XX' )    // → {}
+```
+
 ---
 
 ## `utils.console` — Structured Logging

@@ -3,6 +3,7 @@ import * as utils from '../_.js';
 import available_locales from './locales.js';
 import localisations from './localisations.js';
 import latinisations from './latinisations.js';
+import available_countries from './countries.js';
 import * as sanitiser from './sanitiser.js';
 
 /**
@@ -260,4 +261,30 @@ export function current_locale( input ) {
 	
 	return locale;
 
+}
+
+
+/**
+ * Returns all countries, keyed by ISO 3166-1 alpha-2 code
+ * A fresh copy on every call, so callers can change it freely
+ *
+ * @return   {Object}   Returns { FI: { iso, name_english, name_native, dial }, ... }
+ */
+
+export function countries() {
+	return utils.hench.object.valid( available_countries, true );
+}
+
+
+/**
+ * Returns one country by its ISO 3166-1 alpha-2 code
+ * A fresh copy on every call, so callers can change it freely
+ *
+ * @param   {String}   iso   Country code as FI, fi, ...
+ *
+ * @return   {Object}   Returns { iso, name_english, name_native, dial }, {} if not found
+ */
+
+export function country( iso ) {
+	return utils.hench.object.valid( available_countries[ sanitise( iso, [ 'trim', 'upper:::en' ] ) ], true );
 }
