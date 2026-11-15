@@ -995,42 +995,54 @@ linguist.current_locale( 'en' )  // → 'en' (if available)
 linguist.current_locale()        // → detected from browser/system
 ```
 
-### `linguist.countries()`
+### `linguist.countries({ locale })`
 
-Returns every country as an object keyed by its ISO 3166-1 alpha-2 code. 252 entries: all 249 ISO countries and territories, plus Ascension Island (`AC`), Tristan da Cunha (`TA`) and Kosovo (`XK`). Each call returns a fresh copy, so changing it affects nothing else.
+Returns every country as an object keyed by its ISO 3166-1 alpha-2 code, named in `locale`. 252 entries: all 249 ISO countries and territories, plus Ascension Island (`AC`), Tristan da Cunha (`TA`) and Kosovo (`XK`). Each call returns a fresh copy, so changing it affects nothing else.
+
+- **`locale`** — `'en'` or `'tr'`. Case is ignored, and a regional code falls back to its language (`'tr-TR'` → `'tr'`). Missing or unknown → `'en'`.
+
+Turkish names come from CLDR, the Unicode locale data.
 
 Each entry holds:
 
 | Key | Value |
 |-----|-------|
 | `iso` | ISO 3166-1 alpha-2 code, upper case. |
-| `name_english` | Name in English. |
-| `name_native` | Name in the country's own language; one language for multilingual countries. `''` when it would match `name_english`: English is an official language, or the names are spelled alike (`France`, `Türkiye`). |
-| `aliases` | Other names people search by, for search only, never for display: former names (`Turkey`), common short and long forms (`UK`, `England`, `United States of America`), and names in the country's other official languages (`Suisse`, `Svizzera`). `[]` when none. |
+| `name` | Name in `locale`. |
+| `name_native` | Name in the country's own language; one language for multilingual countries. `''` when it would match `name`: the country speaks the locale's language (`Australia` in `'en'`, `Türkiye` in `'tr'`), or the names are spelled alike (`France`, `Türkiye` in `'en'`). |
+| `aliases` | Other names people search by, for search only, never for display: former names (`Turkey`), common short and long forms (`UK`, `England`, `İngiltere`, `ABD`), and names in the country's other official languages (`Suisse`, `Svizzera`). The same in every locale. `[]` when none. |
 | `dial` | Calling code, digits only, without `+`. Several countries share one (`1`, `7`, `44`, …). `''` for Bouvet Island and Heard Island and McDonald Islands, which have none. |
 
 ```js
 linguist.countries()
-// → { AC: { iso: 'AC', ... }, AD: { iso: 'AD', ... }, ..., ZW: { iso: 'ZW', ... } }
+// → { AC: { iso: 'AC', name: 'Ascension Island', ... }, ..., ZW: { iso: 'ZW', ... } }
 
-Object.values( linguist.countries() )
-  .sort(( l, r ) => hench.compare_to_sort( l.name_english, r.name_english ))
-// → list sorted by English name
+linguist.countries({ locale: 'tr' })
+// → { AC: { iso: 'AC', name: 'Ascension Adası', ... }, ..., ZW: { iso: 'ZW', ... } }
 
-hench.array.filter( Object.values( linguist.countries() ), [{ keys: [ 'name_english', 'name_native', 'aliases' ], val: 'england' }] )
+Object.values( linguist.countries({ locale: 'tr' }) )
+  .sort(( l, r ) => hench.compare_to_sort( l.name, r.name ))
+// → list sorted by Turkish name
+
+hench.array.filter( Object.values( linguist.countries() ), [{ keys: [ 'name', 'name_native', 'aliases' ], val: 'england' }] )
 // → [ { iso: 'GB', ... } ]
 ```
 
-### `linguist.country( iso )`
+### `linguist.country({ iso, locale })`
 
-Returns one country by its ISO 3166-1 alpha-2 code. Ignores case and surrounding spaces. Returns a fresh copy, or `{}` if the code is unknown.
+Returns one country by its ISO 3166-1 alpha-2 code, named in `locale` as in `countries()`. Ignores case and surrounding spaces in `iso`. Returns a fresh copy, or `{}` if the code is unknown.
 
 ```js
-linguist.country( 'FI' )
-// → { iso: 'FI', name_english: 'Finland', name_native: 'Suomi', aliases: [], dial: '358' }
+linguist.country({ iso: 'FI' })
+// → { iso: 'FI', name: 'Finland', name_native: 'Suomi', aliases: [], dial: '358' }
 
-linguist.country( ' tr ' )  // → { iso: 'TR', name_english: 'Türkiye', name_native: '', aliases: [ 'Turkey' ], dial: '90' }
-linguist.country( 'XX' )    // → {}
+linguist.country({ iso: 'fi', locale: 'tr' })
+// → { iso: 'FI', name: 'Finlandiya', name_native: 'Suomi', aliases: [], dial: '358' }
+
+linguist.country({ iso: ' tr ', locale: 'tr-TR' })
+// → { iso: 'TR', name: 'Türkiye', name_native: '', aliases: [ 'Turkey' ], dial: '90' }
+
+linguist.country({ iso: 'XX' })  // → {}
 ```
 
 ---

@@ -3,7 +3,8 @@ import * as utils from '../_.js';
 import available_locales from './locales.js';
 import localisations from './localisations.js';
 import latinisations from './latinisations.js';
-import available_countries from './countries.js';
+import country_entries from './countries/entries.js';
+import country_names from './countries/names.js';
 import * as sanitiser from './sanitiser.js';
 
 /**
@@ -265,26 +266,73 @@ export function current_locale( input ) {
 
 
 /**
- * Returns all countries, keyed by ISO 3166-1 alpha-2 code
+ * Returns all countries, keyed by ISO 3166-1 alpha-2 code, named in the given locale
  * A fresh copy on every call, so callers can change it freely
  *
- * @return   {Object}   Returns { FI: { iso, name_english, name_native, dial }, ... }
+ * @param   {String}   locale   Locale as en, tr, tr-TR, ...; en when missing or unknown
+ *
+ * @return   {Object}   Returns { FI: { iso, name, name_native, aliases, dial }, ... }
  */
 
-export function countries() {
-	return utils.hench.object.valid( available_countries, true );
+export function countries({ locale } = {}) {
+
+	const names = country__names( locale );
+
+	const output = {};
+	for ( const iso of Object.keys( country_entries ) ) {
+		output[ iso ] = country__entry( iso, names ); }
+
+	return output;
+
 }
 
 
 /**
- * Returns one country by its ISO 3166-1 alpha-2 code
+ * Returns one country by its ISO 3166-1 alpha-2 code, named in the given locale
  * A fresh copy on every call, so callers can change it freely
  *
- * @param   {String}   iso   Country code as FI, fi, ...
+ * @param   {String}   iso      Country code as FI, fi, ...
+ * @param   {String}   locale   Locale as en, tr, tr-TR, ...; en when missing or unknown
  *
- * @return   {Object}   Returns { iso, name_english, name_native, dial }, {} if not found
+ * @return   {Object}   Returns { iso, name, name_native, aliases, dial }, {} if not found
  */
 
-export function country( iso ) {
-	return utils.hench.object.valid( available_countries[ sanitise( iso, [ 'trim', 'upper:::en' ] ) ], true );
+export function country({ iso, locale } = {}) {
+	return country__entry( sanitise( iso, [ 'trim', 'upper:::en' ] ), country__names( locale ) );
+}
+
+
+// Country names for the locale: the exact code, then its base language (tr-TR → tr), then en
+//
+function country__names( locale ) {
+
+	const code = sanitise( locale, [ 'trim', 'lower:::en' ] );
+
+	for ( const each of [ code, code.split( /[-_]/u )[ 0 ], 'en' ] ) {
+		if ( utils.hench.object.not_empty( country_names[ each ] ) ) {
+			return country_names[ each ]; } }
+
+	return {};
+
+}
+
+
+// One country in the given names; name_native is blanked when it says the same as name
+//
+function country__entry( iso, names ) {
+
+	const entry = utils.hench.object.valid( country_entries[ iso ] );
+	if ( utils.hench.object.empty( entry ) ) {
+		return {}; }
+
+	const name = utils.hench.string.valid( names[ iso ] );
+
+	return {
+		iso: entry.iso,
+		name,
+		name_native: ( entry.name_native === name ) ? '' : entry.name_native,
+		aliases: utils.hench.array.valid( entry.aliases, true ),
+		dial: entry.dial,
+	};
+
 }
