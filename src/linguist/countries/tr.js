@@ -76,7 +76,7 @@ export default {
     "FO": "Faroe Adaları",
     "FR": "Fransa",
     "GA": "Gabon",
-    "GB": "Birleşik Krallık",
+    "GB": "İngiltere",
     "GD": "Grenada",
     "GE": "Gürcistan",
     "GF": "Fransız Guyanası",
