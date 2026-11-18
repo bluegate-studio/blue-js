@@ -105,3 +105,42 @@ export function nearest_prev({ needle, haystack }) {
 	return nearest_prev;
 
 }
+
+
+/**
+ * Formats a number as a plain decimal in any BCP 47 locale
+ *
+ * @param   {Number}   input    Number to format; coerced as float, garbage becomes 0
+ * @param   {String}   locale   BCP 47 tag as de-CH, tr-TR, en, ...; current_locale() when unsupported or invalid
+ * @param   {Number}   digits   Fixed fraction digits, 0 to 20; Intl's defaults when omitted
+ *
+ * @return   {String}   Returns the formatted number as 20’000.00
+ */
+
+export function to_display({ input, locale, digits } = {}) {
+
+	input = valid( input, 'float' );
+
+	let supported = [];
+	try {
+		supported = Intl.NumberFormat.supportedLocalesOf( utils.hench.string.valid( locale ) );
+	} catch ( err ) {}
+
+	locale = utils.hench.string.valid( supported[0] );
+	if ( locale.length < 1 ) {
+		locale = utils.linguist.current_locale(); }
+
+	const options = {};
+	if ( fathom( digits ) ) {
+		digits = Math.min( 20, Math.max( 0, int( digits ) ) );
+		options.minimumFractionDigits = digits;
+		options.maximumFractionDigits = digits; }
+
+	let output = utils.hench.string.valid( input );
+	try {
+		output = new Intl.NumberFormat( locale, options ).format( input );
+	} catch ( err ) {}
+
+	return output;
+
+}

@@ -615,6 +615,24 @@ number.nearest_next({ needle: 7, haystack: [1, 5, 10, 15] })  // → 10
 number.nearest_prev({ needle: 7, haystack: [1, 5, 10, 15] })  // → 5
 ```
 
+#### `number.to_display({ input, locale, digits })`
+
+Formats a number as a plain decimal in any BCP 47 locale. Never currency or percent. Never throws.
+
+- **`input`** — Coerced with `number.valid( input, 'float' )`, so anything that isn't a number becomes `0`.
+- **`locale`** — Any BCP 47 tag (`'de-CH'`, `'tr-TR'`, `'en'`), not only the dictionary locales. Falls back to `linguist.current_locale()` when the tag is empty, malformed, or not supported by the runtime.
+- **`digits`** — Fixed number of fraction digits, clamped to `0`–`20`. When it isn't a number (omitted, `null`, `'2'`), `Intl.NumberFormat`'s defaults apply (up to 3 fraction digits).
+
+The group mark comes from the runtime's ICU data; current ICU uses `’` (U+2019) for `de-CH`.
+
+```js
+number.to_display({ input: 20000, locale: 'de-CH', digits: 2 })   // → '20’000.00'
+number.to_display({ input: 1234567.891, locale: 'de-CH' })        // → '1’234’567.891'
+number.to_display({ input: 20000, locale: 'tr-TR', digits: 2 })   // → '20.000,00'
+number.to_display({ input: 'abc', locale: 'de-CH', digits: 2 })   // → '0.00'
+number.to_display({ input: 5, locale: 'xx-INVALID', digits: 0 })  // → '5', formatted in current_locale()
+```
+
 ---
 
 ### `hench.bool`
@@ -691,12 +709,14 @@ regex.escape( 'price is $5.00 (USD)' )
 Converts an integer amount (in cents) to a locale-formatted currency string.
 
 ```js
-currency.to_display({ input: 123456, locale: 'en-US', currency: 'USD' })
+currency.to_display({ input: 123456, locale: 'en', currency: 'USD' })
 // → '$1,234.56'
 
 currency.to_display({ input: 99900, locale: 'tr', currency: 'TRY' })
 // → '₺999,00'
 ```
+
+> `locale` goes through `linguist.current_locale()`, so only the dictionary locales (`en`, `tr`) are honoured. Any other tag (e.g. `'de-CH'`) falls back to the device language, or `en`. For other locales, use [`number.to_display`](#numberto_display-input-locale-digits-).
 
 #### `currency.from_display({ input, accuracy })`
 
