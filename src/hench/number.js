@@ -11,7 +11,10 @@ export function float(input) {
 
 export function valid( input, type ) {
 
-	const n = Number( input );
+	let n = 0;
+	try {
+		n = Number( input );
+	} catch ( err ) {}
 
 	if ( !Number.isFinite( n ) ) {
 		return 0; }
